@@ -86,12 +86,12 @@
 
                 <!-- Tab Role -->
                 <div class="flex p-1 bg-slate-100 rounded-xl mb-6">
-                    <button class="flex-1 py-2 text-sm font-medium text-slate-500 rounded-lg flex items-center justify-center gap-2">
+                    <a href="{{ route('login.pelajar') }}" class="flex-1 py-2 text-sm font-medium text-slate-500 rounded-lg flex items-center justify-center gap-2">
                         <i class="fas fa-book-reader"></i> Pelajar
-                    </button>
-                    <button class="flex-1 py-2 text-sm font-medium bg-[#1a3652] text-white rounded-lg shadow-sm flex items-center justify-center gap-2">
+                    </a>
+                    <a class="flex-1 py-2 text-sm font-medium bg-[#1a3652] text-white rounded-lg shadow-sm flex items-center justify-center gap-2">
                         <i class="fas fa-chalkboard-teacher"></i> Pengajar
-                    </button>
+                    </a>
                 </div>
 
                 <!-- Info Alert -->

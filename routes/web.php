@@ -1,13 +1,10 @@
 <?php
 
+use App\Http\Controllers\login;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
-});
-
-Route::get('/login', function () {
-    return view('login');
 });
 
 Route::get('/login_pelajar', function () {
@@ -37,3 +34,8 @@ Route::get('/cari_tutor_pelajar', function () {
 Route::get('/monitoring_pelajar', function () {
     return view('monitoring_pelajar');
 });
+
+Route::get('/login', [login::class, 'pelajar'])->name('login.pelajar');
+Route::get('/login/pelajar', [login::class, 'pelajar'])->name('login.pelajar');
+Route::get('/login/pengajar', [login::class, 'pengajar'])->name('login.pengajar');
+

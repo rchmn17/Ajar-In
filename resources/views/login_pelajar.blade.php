@@ -91,12 +91,12 @@
                 <p class="text-slate-500 text-sm mb-10">Pilih role dan masukkan kredensial akunmu.</p>
 
                 <div class="flex p-1.5 bg-slate-100 rounded-2xl mb-6">
-                    <button class="flex-1 py-2.5 text-xs font-bold bg-white text-slate-900 rounded-xl shadow-sm border border-slate-200 flex items-center justify-center gap-2">
+                    <a class="flex-1 py-2.5 text-xs font-bold bg-white text-slate-900 rounded-xl shadow-sm border border-slate-200 flex items-center justify-center gap-2">
                         <i class="fas fa-book-open"></i> Pelajar
-                    </button>
-                    <button class="flex-1 py-2.5 text-xs font-bold text-slate-400 rounded-xl flex items-center justify-center gap-2 hover:text-slate-600 transition">
+                    </a>
+                    <a href="{{ route('login.pengajar') }}" class="flex-1 py-2.5 text-xs font-bold text-slate-400 rounded-xl flex items-center justify-center gap-2 hover:text-slate-600 transition">
                         <i class="fas fa-graduation-cap"></i> Pengajar
-                    </button>
+                    </a>
                 </div>
 
                 <div class="bg-slate-50 border border-slate-200 px-4 py-3 rounded-2xl mb-8 flex items-start gap-3">
