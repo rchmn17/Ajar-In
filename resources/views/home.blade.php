@@ -60,7 +60,7 @@
                     <div class="w-1 h-1 bg-slate-500 rounded-full"></div> Bayar per sesi, tanpa komitmen
                 </li>
             </ul>
-            <a href="#" class="flex items-center gap-2 text-amber-500 font-semibold text-sm hover:gap-4 transition-all">
+            <a href="{{ route('login.pelajar') }}" class="flex items-center gap-2 text-amber-500 font-semibold text-sm hover:gap-4 transition-all">
                 Masuk sebagai <span class="text-amber-500">Pelajar</span>
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
@@ -86,7 +86,7 @@
                     <div class="w-1 h-1 bg-slate-500 rounded-full"></div> Komunitas pengajar profesional
                 </li>
             </ul>
-            <a href="#" class="flex items-center gap-2 text-amber-500 font-semibold text-sm hover:gap-4 transition-all">
+            <a href="{{ route('login.pengajar') }}" class="flex items-center gap-2 text-amber-500 font-semibold text-sm hover:gap-4 transition-all">
                 Masuk sebagai <span class="text-amber-500">Pengajar</span>
                 <i data-lucide="arrow-right" class="w-4 h-4"></i>
             </a>
