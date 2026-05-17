@@ -28,6 +28,27 @@ Route::post('/instructor/login', [LoginController::class, 'InstructorLogin'])->n
 // Form Registrasi / Daftar Akun
 Route::get('/student/regist', [UserController::class, 'showStudentRegisterForm'])->name('student.register');
 Route::get('/instructor/regist', [UserController::class, 'showInstructorRegisterForm'])->name('instructor.register');
+Route::post('/instructor/regist', [UserController::class, 'registerInstructor'])->name('instructor.register.submit');
+
+Route::get('/dashboard_pelajar', function () {
+    return view('dashboard_pelajar');
+});
+
+Route::get('/dashboard-pengajar', function () {
+    return view('dashboard_pengajar'); 
+})->name('pengajar.dashboard');
+
+Route::get('/cari_tutor_pelajar', function () {
+    return view('cari_tutor_pelajar');
+});
+
+Route::get('/request_matching_pelajar', function () {
+    return view('request_matching_pelajar');
+});
+
+Route::get('/booking_pelajar', function () {
+    return view('booking_pelajar');
+});
 
 // Proses Kirim Data Registrasi (POST)
 Route::post('/student/regist', [UserController::class, 'registerStudent'])->name('student.register.submit');
@@ -47,6 +68,12 @@ Route::post('/api/booking/store', [TransactionController::class, 'store'])->name
 |--------------------------------------------------------------------------
 */
 Route::group(['middleware' => ['auth', 'role:student']], function () {
+// Route Logout
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::group(['middleware' => ['auth','role:instructor']], function () {
+    Route::get('/instructor/dashboard', [DashboardController::class, 'schedule'])->name('instructor.dashboard');
+    Route::get('/instructor/dashboard', [ScheduleController::class, 'initial_Instructor'])->name('instructor.getData');
     
     // Dashboard Utama Pelajar (views/student/dashboard.blade.php)
     Route::get('/student/dashboard', function () {
@@ -103,4 +130,13 @@ Route::group(['middleware' => ['auth', 'role:instructor']], function () {
     // API Internal untuk Pengaturan Jadwal (Tetap menggunakan ScheduleController)
     Route::get('/api/schedules', [ScheduleController::class, 'getSchedules'])->name('api.schedules.get');
     Route::post('/api/schedules', [ScheduleController::class, 'storeSchedules'])->name('api.schedules.store');
+});
+Route::group(['middleware' => ['auth','role:instructor']], function () {
+    // Menampilkan halaman dashboard (asumsi Anda sudah punya routenya)
+    Route::get('instructor/dashboard/calendar', [DashboardController::class, 'calendar'])->name('instructor.dashboard.calendar');
+    Route::get('instructor/dashboard/progress', [DashboardController::class, 'progress'])->name('instructor.dashboard.progress');
+    Route::get('instructor/dashboard/schedule', [DashboardController::class, 'schedule'])->name('instructor.dashboard.schedule');
+    Route::get('instructor/profile', [UserController::class, 'instructorProfile'])->name('instructor.profile');
+    Route::get('/api/schedules', [ScheduleController::class, 'getSchedules']);
+    Route::post('/api/schedules', [ScheduleController::class, 'storeSchedules']);
 });

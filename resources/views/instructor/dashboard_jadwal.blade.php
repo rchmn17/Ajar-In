@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-[#f8fafc] font-sans antialiased text-slate-800">
-
     <x-navbar ></x-navbar>>
 
     <main class="max-w-7xl mx-auto px-8 py-10">
@@ -68,53 +67,19 @@
                 <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-8">
                     <div class="flex items-center gap-3 mb-6">
                         <h2 class="text-lg font-bold text-[#1a3652]">Request Masuk</h2>
-                        <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">2</span>
+                        <span class="bg-red-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">{{ $sessions->where('status', 'waiting')->count() }}</span>
                     </div>
 
                     <div class="space-y-4">
-                        <div class="border border-slate-100 rounded-xl p-5 hover:border-slate-200 transition-colors">
-                            <div class="flex justify-between items-start mb-3">
-                                <div class="flex items-center gap-3">
-                                    <img src="https://ui-avatars.com/api/?name=Rizky+Pratama&background=random" class="w-10 h-10 rounded-full object-cover">
-                                    <div>
-                                        <h4 class="font-bold text-sm text-[#1a3652]">Rizky Pratama</h4>
-                                        <div class="flex items-center gap-2 mt-1">
-                                            <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-md">Laravel Middleware</span>
-                                            <span class="text-[10px] text-slate-400">3 jam</span>
-                                            <span class="text-[10px] text-slate-400">150rb/jam</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <span class="text-[10px] font-medium text-slate-400">5 menit lalu</span>
-                            </div>
-                            <p class="text-xs text-slate-500 leading-relaxed mb-4 pl-13">Stuck di bagian auth middleware untuk multi-role. Sudah coba tapi error terus.</p>
-                            <div class="flex gap-3 pl-13">
-                                <button class="flex-1 py-2 rounded-lg border border-slate-200 text-xs font-bold text-slate-500 hover:bg-slate-50 transition-colors">Tolak</button>
-                                <button class="flex-1 py-2 rounded-lg bg-[#1a3652] text-white text-xs font-bold hover:bg-[#112438] transition-colors shadow-md">Terima & Hubungi</button>
-                            </div>
-                        </div>
-
-                        <div class="border border-slate-100 rounded-xl p-5 hover:border-slate-200 transition-colors">
-                            <div class="flex justify-between items-start mb-3">
-                                <div class="flex items-center gap-3">
-                                    <img src="https://ui-avatars.com/api/?name=Maya+Sari&background=random" class="w-10 h-10 rounded-full object-cover">
-                                    <div>
-                                        <h4 class="font-bold text-sm text-[#1a3652]">Maya Sari</h4>
-                                        <div class="flex items-center gap-2 mt-1">
-                                            <span class="bg-slate-100 text-slate-500 text-[10px] font-bold px-2 py-0.5 rounded-md">API Design</span>
-                                            <span class="text-[10px] text-slate-400">2 jam</span>
-                                            <span class="text-[10px] text-slate-400">150rb/jam</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <span class="text-[10px] font-medium text-slate-400">1 jam lalu</span>
-                            </div>
-                            <p class="text-xs text-slate-500 leading-relaxed mb-4 pl-13">Ingin belajar cara design RESTful API yang clean dan scalable.</p>
-                            <div class="flex gap-3 pl-13">
-                                <button class="flex-1 py-2 rounded-lg border border-slate-200 text-xs font-bold text-slate-500 hover:bg-slate-50 transition-colors">Tolak</button>
-                                <button class="flex-1 py-2 rounded-lg bg-[#1a3652] text-white text-xs font-bold hover:bg-[#112438] transition-colors shadow-md">Terima & Hubungi</button>
-                            </div>
-                        </div>
+                        {{-- CARD REQUEST --}}
+                        @if (isset($sessions) )
+                            @foreach ($sessions as $session)
+                                @if($session->status == "waiting")
+                                    <x-request_course :s="$session" />
+                                @endif
+                            @endforeach
+                        @endif
+                        
                     </div>
                 </div>
 
@@ -127,27 +92,22 @@
                     </div>
 
                     <div class="space-y-4">
-                        @php
-                            $schedules = [
-                                ['title' => 'Database Schema Design', 'student' => 'Dian Permata', 'time' => 'Hari ini • 14:00 WIB • 2 jam', 'status' => 'Akan Datang', 'color' => 'blue', 'action' => 'Start'],
-                                ['title' => 'Laravel REST API', 'student' => 'Rizky Pratama', 'time' => 'Besok • 10:00 WIB • 1.5 jam', 'status' => 'Akan Datang', 'color' => 'blue', 'action' => 'Start'],
-                                ['title' => 'Git Workflow', 'student' => 'Maya Sari', 'time' => '15 Apr • 16:00 WIB • 1 jam', 'status' => 'Selesai', 'color' => 'slate', 'action' => ''],
-                            ];
-                        @endphp
-
+                        
+                        
                         @foreach($schedules as $sched)
+                        
                         <div class="flex items-center justify-between border border-slate-100 rounded-xl p-4 border-l-4 {{ $sched['color'] == 'blue' ? 'border-l-[#1a3652]' : 'border-l-slate-300' }} hover:bg-slate-50 transition-colors">
                             <div>
-                                <h4 class="font-bold text-sm text-[#1a3652]">{{ $sched['title'] }}</h4>
-                                <p class="text-xs text-slate-500 mt-1">{{ $sched['student'] }}</p>
+                                <h4 class="font-bold text-sm text-[#1a3652]">{{ $sched->transaction->course->name ?? 'Nama Kursus Tidak Ditemukan' }}</h4>
+                                <p class="text-xs text-slate-500 mt-1">{{ $sched->transaction->user->name }}</p>
                                 <div class="flex items-center gap-1 mt-2 text-[10px] font-medium text-slate-400">
-                                    <i class="far fa-clock"></i> {{ $sched['time'] }}
+                                    <i class="far fa-clock"></i> {{ $sched->tanggal }} • {{ $sched->transaction->duration ?? 'Durasi Tidak Ditemukan' }} jam
                                 </div>
                             </div>
                             <div class="text-right flex flex-col items-end gap-2">
                                 <span class="text-[10px] font-bold uppercase tracking-wider {{ $sched['color'] == 'blue' ? 'text-blue-500' : 'text-slate-400' }} flex items-center gap-1">
-                                    @if($sched['color'] == 'blue') <i class="fas fa-play-circle"></i> @else <i class="fas fa-check-circle"></i> @endif
-                                    {{ $sched['status'] }}
+                                    @if($sched->transaction->status == 'in_progress') <a href="{{ $sched->transaction->linkZoom ?? '#' }}" target="_blank"><span class="px-5 py-2 border-1 hover:bg-grey-900 rounded-md"><i class="fas fa-play-circle"></i> Start</span></a> @else <span><i class="fas fa-check-circle"></i>Completed</span> @endif
+                                    
                                 </span>
                                 @if($sched['action'])
                                     <button class="px-4 py-1.5 bg-white border border-slate-200 text-[#1a3652] text-[11px] font-bold rounded-lg hover:bg-slate-50 transition-colors shadow-sm">
@@ -164,15 +124,15 @@
             <div class="space-y-6">
                 
                 <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 relative">
-                    <button class="absolute top-6 right-6 text-[10px] font-bold text-slate-400 hover:text-[#1a3652] flex items-center gap-1">
+                    <a href="{{ route('instructor.profile') }}" class="absolute top-6 right-6 text-[10px] font-bold text-slate-400 hover:text-[#1a3652] flex items-center gap-1">
                         <i class="fas fa-pen"></i> Edit
-                    </button>
+                    </a>
                     <h3 class="font-bold text-slate-800 mb-6">Profil Saya</h3>
                     
                     <div class="flex items-center gap-4 mb-4">
                         <img src="https://ui-avatars.com/api/?name=Andi+Firmansyah&background=random" class="w-14 h-14 rounded-2xl object-cover">
                         <div>
-                            <h4 class="font-bold text-[#1a3652] text-sm">Andi Firmansyah</h4>
+                            <h4 class="font-bold text-[#1a3652] text-sm">{{ Auth::user()->name }}</h4>
                             <p class="text-[11px] text-slate-400">Senior Full-Stack Developer</p>
                             <div class="flex items-center gap-1 mt-1 text-[10px] font-bold text-slate-500">
                                 <i class="fas fa-star text-amber-500"></i> 4.9 <span class="text-slate-300 font-normal">• 128 ulasan</span>

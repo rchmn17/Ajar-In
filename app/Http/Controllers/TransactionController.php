@@ -9,6 +9,7 @@ use App\Models\Course;
 
 class TransactionController extends Controller
 {
+    
     public function initial_user()
     {
         // Ambil ID user yang sedang login
@@ -16,12 +17,11 @@ class TransactionController extends Controller
         $userId = Auth::id(); 
         // Ambil data transaksi milik user tersebut
         // Gunakan with('course') untuk memanggil relasi kursus agar kita bisa menampilkan nama kursus
-        $sessions = Transaction::with('course')
-                            ->where('user_id', $userId)
-                            ->orderBy('date_time', 'desc') // Urutkan dari jadwal terbaru
-                            ->get();
+        $sessions = Transaction::with(['course', 'user'])
+                ->where('user_id', $userId)
+                ->orderBy('date_time', 'desc')
+                ->get();
 
-        // Kirim variabel $transactions ke file view 'dashboard.blade.php'
         return view('student.dashboard', compact('sessions'));
     }
     public function store(Request $request)
