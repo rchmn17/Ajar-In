@@ -32,7 +32,12 @@
               <button class="relative flex max-w-xs items-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500">
                 <span class="absolute -inset-1.5"></span>
                 <span class="sr-only">Open user menu</span>
-                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" class="size-8 rounded-full outline -outline-offset-1 outline-white/10" />
+                <div class="flex items-center gap-3 bg-white/10 pl-2 pr-4 py-1.5 rounded-full border border-white/10">
+                  <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" class="size-8 rounded-full outline -outline-offset-1 outline-white/10" />
+                  <p class="text-sm font-semibold text-white" aria-hidden="true">{{ Auth::user()->name }}</p>
+                  <i class="fas fa-chevron-down text-[10px] text-slate-400"></i>
+                </div>
+                
               </button>
 
               <el-menu anchor="bottom end" popover class="w-48 origin-top-right rounded-md bg-gray-800 py-1 outline-1 -outline-offset-1 outline-white/10 transition transition-discrete [--anchor-gap:--spacing(2)] data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in">
@@ -74,8 +79,8 @@
             <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" class="size-10 rounded-full outline -outline-offset-1 outline-white/10" />
           </div>
           <div class="ml-3">
-            <div class="text-base/5 font-medium text-white">Tom Cook</div>
-            <div class="text-sm font-medium text-gray-400">tom@example.com</div>
+            <div class="text-base/5 font-medium text-white">{{ Auth::user()->name }}</div>
+            <div class="text-sm font-medium text-gray-400">{{ Auth::user()->email }}</div>
           </div>
           <button type="button" class="relative ml-auto shrink-0 rounded-full p-1 text-gray-400 hover:text-white focus:outline-2 focus:outline-offset-2 focus:outline-indigo-500">
             <span class="absolute -inset-1.5"></span>
