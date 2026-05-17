@@ -35,9 +35,13 @@ Route::get('/dashboard-pelajar', function () {
     return view('dashboard_pelajar'); 
 })->name('pelajar.dashboard');
 
-Route::get('/dashboard_pengajar', function () {
-    return view('dashboard_pengajar');
-});
+Route::get('/dashboard-pengajar', function () {
+    return view('dashboard_pengajar'); 
+})->name('pengajar.dashboard');
+
+Route::get('/profile-pengajar', function () {
+    return view('profile_pengajar'); 
+})->name('pengajar.profile');
 
 Route::get('/profile-pelajar', function () {
     return view('profile_pelajar'); 
