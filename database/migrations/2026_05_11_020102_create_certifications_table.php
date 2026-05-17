@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('certifications', function (Blueprint $table) {
             $table->id('certificate_id');
-            $table->unsignedBigInteger('instructor_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->text('description')->nullable();
             $table->year('year')->nullable();
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Foreign Key constraint
-            $table->foreign('instructor_id')->references('instructor_id')->on('instructors')->onDelete('cascade');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
         });
     }
 
