@@ -16,22 +16,7 @@
 
     <div id="main-content-wrapper" class="transition-all duration-300">
         
-        <nav class="bg-[#1a3652] text-white px-8 py-4 flex items-center justify-between sticky top-0 z-40 shadow-sm">
-            <div class="flex items-center gap-12">
-                <div class="flex items-center gap-2">
-                    <div class="bg-white/20 p-1.5 rounded-lg">
-                        <i class="fas fa-book-open text-lg"></i>
-                    </div>
-                    <span class="text-xl font-bold tracking-tight">AjarIn</span>
-                </div>
-            </div>
-            <div class="flex items-center gap-4">
-                <div class="flex items-center gap-3 bg-white/10 pl-2 pr-4 py-1.5 rounded-full border border-white/10">
-                    <div class="w-8 h-8 rounded-full bg-slate-400 flex items-center justify-center font-bold text-xs uppercase">RP</div>
-                    <span class="text-sm font-semibold">Rizky</span>
-                </div>
-            </div>
-        </nav>
+        <x-navbar></x-navbar>
 
         <section class="bg-[#1a3652] pt-12 pb-16 px-8">
             <div class="max-w-7xl mx-auto">
