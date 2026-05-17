@@ -68,6 +68,9 @@ Route::post('/api/booking/store', [TransactionController::class, 'store'])->name
 |--------------------------------------------------------------------------
 */
 Route::group(['middleware' => ['auth', 'role:student']], function () {
+
+
+});
 // Route Logout
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
