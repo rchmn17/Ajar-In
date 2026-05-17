@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Pengajar - AjarIn</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link class="jsbin" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         .tab-content { display: none; }
@@ -26,7 +27,7 @@
             </div>
             <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
                 <a href="#" class="hover:text-white transition-colors">Cari Tutor</a>
-                <a href="#" class="text-white border-b-2 border-white pb-1">Dashboard Pengajar</a>
+                <a href="{{ route('pengajar.dashboard') }}" class="text-white border-b-2 border-white pb-1">Dashboard Pengajar</a>
             </div>
         </div>
         <div class="flex items-center gap-4">
@@ -37,11 +38,33 @@
                 <i class="far fa-bell text-xl"></i>
                 <span class="absolute -top-1 -right-1 bg-red-500 text-[10px] w-4 h-4 flex items-center justify-center rounded-full">3</span>
             </div>
-            <div class="flex items-center gap-3 bg-white/10 pl-2 pr-4 py-1.5 rounded-full border border-white/10 cursor-pointer">
-                <div class="w-8 h-8 rounded-full bg-slate-400 flex items-center justify-center font-bold text-xs uppercase">AF</div>
-                <span class="text-sm font-semibold">Andi</span>
-                <i class="fas fa-chevron-down text-[10px] text-slate-400"></i>
+            
+            <div class="relative group py-2">
+                <div class="flex items-center gap-3 bg-white/10 pl-2 pr-4 py-1.5 rounded-full border border-white/10 cursor-pointer">
+                    <div class="w-8 h-8 rounded-full bg-slate-400 flex items-center justify-center font-bold text-xs uppercase">AF</div>
+                    <span class="text-sm font-semibold">Andi</span>
+                    <i class="fas fa-chevron-down text-[10px] text-slate-400"></i>
+                </div>
+                
+                <div class="absolute right-0 top-full mt-1 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 text-slate-700 hidden group-hover:block transition-all duration-200 z-50">
+                    <div class="px-4 py-3 border-b border-slate-50">
+                        <p class="text-sm font-black text-[#1a3652] leading-tight">Andi Firmansyah</p>
+                        <p class="text-xs text-slate-400 font-medium mt-0.5">tutor@ajarin.id</p>
+                    </div>
+                    <a href="{{ route('pengajar.dashboard') }}" class="flex items-center gap-3 px-4 py-3 text-xs font-bold text-[#1a3652] bg-slate-50 transition-colors">
+                        <i class="fas fa-th-large w-4 text-[#1a3652] text-sm"></i> Dashboard
+                    </a>
+                    <a href="{{ route('pengajar.profile') }}" class="flex items-center gap-3 px-4 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-[#1a3652] transition-colors">
+                        <i class="far fa-user w-4 text-slate-400 text-sm"></i> Profil Saya
+                    </a>
+                    <div class="border-t border-slate-50 mt-1 pt-1">
+                        <a href="#" class="flex items-center gap-3 px-4 py-3 text-xs font-bold text-red-500 hover:bg-red-50/50 transition-colors">
+                            <i class="fas fa-sign-out-alt w-4 text-sm"></i> Keluar
+                        </a>
+                    </div>
+                </div>
             </div>
+
         </div>
     </nav>
 
@@ -194,8 +217,9 @@
                             @endforeach
                         </div>
                     </div>
+                </div>
 
-                </div> <div id="tab-progres" class="tab-content space-y-6">
+                <div id="tab-progres" class="tab-content space-y-6">
                     <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 overflow-hidden">
                         <div class="mb-6">
                             <h2 class="text-lg font-bold text-[#1a3652]">Daftar Progres Murid</h2>
@@ -287,7 +311,7 @@
 
             <div class="space-y-6">
                 <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-6 relative">
-                    <button class="absolute top-6 right-6 text-[10px] font-bold text-slate-400 hover:text-[#1a3652]"><i class="fas fa-pen"></i> Edit</button>
+                    <a href="{{ route('pengajar.profile') }}" class="absolute top-6 right-6 text-[10px] font-bold text-slate-400 hover:text-[#1a3652]"><i class="fas fa-pen"></i> Edit</a>
                     <h3 class="font-bold text-slate-800 mb-6">Profil Saya</h3>
                     
                     <div class="flex items-center gap-4 mb-5">
@@ -343,9 +367,7 @@
         <p class="text-center text-xs text-slate-400">© 2026 AjarIn. Semua hak dilindungi.</p>
     </footer>
 
-
     <script>
-        // ENGINE SWITCHER TAB
         function switchTab(tabId) {
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.classList.remove('active');
@@ -363,7 +385,6 @@
             if(tabId === 'kalender') renderCalendar();
         }
 
-        // ENGINE SMART VISUAL MONTHLY CALENDAR
         let date = new Date();
         let currYear = date.getFullYear();
         let currMonth = date.getMonth();
@@ -390,7 +411,6 @@
                 let btn = document.createElement('button');
                 btn.innerText = i;
                 
-                // Mencegat intersep hari yang sudah lewat
                 let isPast = false;
                 if (currYear < todayYear) {
                     isPast = true;
@@ -401,11 +421,9 @@
                 }
 
                 if (isPast) {
-                    // Tombol Mati (Abu-abu & Disabled)
                     btn.className = "w-10 h-10 rounded-xl text-xs font-bold flex items-center justify-center bg-slate-50 text-slate-300 cursor-not-allowed select-none";
                     btn.disabled = true;
                 } else {
-                    // Tombol Hidup Aktif
                     btn.className = "w-10 h-10 rounded-xl text-xs font-bold flex items-center justify-center transition-all hover:bg-slate-100 text-slate-700 date-btn";
                     btn.onclick = function() {
                         document.querySelectorAll('.date-btn').forEach(b => b.classList.remove('bg-[#1a3652]', 'text-white'));
@@ -417,10 +435,6 @@
             }
         }
 
-        function prevMonth() { currMonth--; if(currMonth < 0) { currMonth = 11; currYear--; } renderCalendar(); }
-        function nextMonth() { currMonth++; if(currMonth > 11) { currMonth = 0; currYear++; } renderCalendar(); }
-
-        // TOGGLING SLOT JAM MULTIPLE CHOICE
         function toggleSlot(btn) {
             btn.classList.toggle('bg-[#1a3652]');
             btn.classList.toggle('text-white');
