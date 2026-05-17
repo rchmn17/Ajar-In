@@ -37,17 +37,13 @@ Route::get('/dashboard_pelajar', function () {
     return view('dashboard_pelajar');
 });
 
-Route::get('/dashboard_pengajar_jadwal', function () {
-    return view('dashboard_pengajar_jadwal');
-});
+Route::get('/dashboard-pengajar', function () {
+    return view('dashboard_pengajar'); 
+})->name('pengajar.dashboard');
 
-Route::get('/dashboard_pengajar_progress', function () {
-    return view('dashboard_pengajar_progress');
-});
-
-Route::get('/dashboard_pengajar_kalender', function () {
-    return view('dashboard_pengajar_kalender');
-});
+Route::get('/profile-pengajar', function () {
+    return view('profile_pengajar'); 
+})->name('pengajar.profile');
 
 Route::get('/cari_tutor_pelajar', function () {
     return view('cari_tutor_pelajar');

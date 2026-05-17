@@ -9,41 +9,14 @@
 </head>
 <body class="bg-[#f8fafc] font-sans antialiased text-slate-800">
 
-    <nav class="bg-[#1a3652] text-white px-8 py-4 flex items-center justify-between sticky top-0 z-50">
-        <div class="flex items-center gap-12">
-            <div class="flex items-center gap-2">
-                <div class="bg-white/20 p-1.5 rounded-lg">
-                    <i class="fas fa-book-open text-lg"></i>
-                </div>
-                <span class="text-xl font-bold tracking-tight">AjarIn</span>
-            </div>
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-                <a href="#" class="hover:text-white transition-colors">Cari Tutor</a>
-                <a href="#" class="text-white border-b-2 border-white pb-1">Dashboard Pengajar</a>
-            </div>
-        </div>
-        <div class="flex items-center gap-4">
-            <button class="bg-white/10 px-4 py-1.5 rounded-full text-xs font-semibold border border-white/10 flex items-center gap-2">
-                <i class="fas fa-chalkboard-teacher"></i> Pengajar
-            </button>
-            <div class="relative cursor-pointer">
-                <i class="far fa-bell text-xl"></i>
-                <span class="absolute -top-1 -right-1 bg-red-500 text-[10px] w-4 h-4 flex items-center justify-center rounded-full">3</span>
-            </div>
-            <div class="flex items-center gap-3 bg-white/10 pl-2 pr-4 py-1.5 rounded-full border border-white/10 cursor-pointer">
-                <div class="w-8 h-8 rounded-full bg-slate-400 flex items-center justify-center font-bold text-xs uppercase">AF</div>
-                <span class="text-sm font-semibold">Andi</span>
-                <i class="fas fa-chevron-down text-[10px] text-slate-400"></i>
-            </div>
-        </div>
-    </nav>
+    <x-navbar ></x-navbar>>
 
     <main class="max-w-7xl mx-auto px-8 py-10">
         
         <div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
             <div>
                 <p class="text-xs font-bold text-slate-400 mb-1">Dashboard Pengajar</p>
-                <h1 class="text-3xl font-bold text-[#1a3652]">Selamat datang, Andi! 👋</h1>
+                <h1 class="text-3xl font-bold text-[#1a3652]">Selamat datang, {{ Auth::user()->name }}! 👋</h1>
             </div>
             <button class="bg-white border border-slate-200 px-5 py-2.5 rounded-xl text-sm font-bold text-slate-600 flex items-center gap-2 hover:bg-slate-50 transition-all shadow-sm">
                 <i class="fas fa-chart-line"></i> Monitoring Board
@@ -302,5 +275,6 @@
             </div>
         </div>
     </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindplus/elements@1" type="module"></script>
 </body>
 </html>
