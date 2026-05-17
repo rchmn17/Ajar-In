@@ -18,12 +18,17 @@ class Schedule extends Model
         'tanggal',
         'jam',
         'status',
-        'course_id'
+        'transaction_id'
     ];
 
     // Relasi ke tabel User (Pengajar)
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'user_id');
+    }
+
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class, 'transaction_id', 'transaction_id');
     }
 }

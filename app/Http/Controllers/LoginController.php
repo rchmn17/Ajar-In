@@ -52,7 +52,7 @@ class LoginController extends Controller
             
             $request->session()->regenerate();
             $user = Auth::user();
-            return redirect()->intended(route('instructor.dashboard'));
+            return redirect()->intended(route('instructor.getData'));
         }
 
         throw ValidationException::withMessages([

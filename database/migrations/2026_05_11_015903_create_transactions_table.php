@@ -18,7 +18,9 @@ return new class extends Migration
             $table->dateTime('date_time');
             $table->enum('status', ['ongoing', 'in_progress', 'waiting', 'completed', 'cancelled'])->default('ongoing');
             $table->integer('duration')->default(1);
+            $table->string('linkZoom')->nullable()->default('');
             $table->timestamps();
+            
 
             // Foreign Key constraints
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');

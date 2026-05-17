@@ -21,10 +21,10 @@ return new class extends Migration
                 '17:00', '18:00', '19:00', '20:00', '21:00'
             ]);
             $table->enum('status', ['tersedia', 'tidak tersedia'])->default('tersedia');
-            $table->unsignedBigInteger('course_id')->nullable();
+            $table->unsignedBigInteger('transaction_id')->nullable();
 
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade'); 
-            $table->foreign('course_id')->references('course_id')->on('courses')->onDelete('set null');
+            $table->foreign('transaction_id')->references('transaction_id')->on('transactions')->onDelete('set null');
             $table->timestamps();
         });
     }
