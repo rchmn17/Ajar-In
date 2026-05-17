@@ -33,7 +33,7 @@ class LoginController extends Controller
             
             $request->session()->regenerate();
             $user = Auth::user();
-            return redirect()->intended(route('student.dashboard'));
+            return redirect()->intended(route('student.loggedin'));
         }
 
         throw ValidationException::withMessages([
