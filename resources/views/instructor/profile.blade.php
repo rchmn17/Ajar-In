@@ -41,13 +41,13 @@
             <div class="relative group py-2">
                 <div class="flex items-center gap-3 bg-white/10 pl-2 pr-4 py-1.5 rounded-full border border-white/10 cursor-pointer">
                     <div class="w-8 h-8 rounded-full bg-slate-400 flex items-center justify-center font-bold text-xs uppercase">AF</div>
-                    <span class="text-sm font-semibold">Ahmad</span>
+                    <span class="text-sm font-semibold">{{ Auth::user()->name }}</span>
                     <i class="fas fa-chevron-down text-[10px] text-slate-400"></i>
                 </div>
                 <div class="absolute right-0 top-full mt-1 w-56 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 text-slate-700 hidden group-hover:block transition-all duration-200 z-50">
                     <div class="px-4 py-3 border-b border-slate-50">
-                        <p class="text-sm font-black text-[#1a3652] leading-tight">Ahmad Fauzi</p>
-                        <p class="text-xs text-slate-400 font-medium mt-0.5">tutor@ajarin.id</p>
+                        <p class="text-sm font-black text-[#1a3652] leading-tight">{{ Auth::user()->name }}</p>
+                        <p class="text-xs text-slate-400 font-medium mt-0.5">{{ Auth::user()->email }}</p>
                     </div>
                     <a href="{{ route('pengajar.dashboard') }}" class="flex items-center gap-3 px-4 py-3 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-[#1a3652] transition-colors">
                         <i class="fas fa-th-large w-4 text-slate-400 text-sm"></i> Dashboard
