@@ -35,16 +35,8 @@ Route::get('/dashboard-pelajar', function () {
     return view('dashboard_pelajar'); 
 })->name('pelajar.dashboard');
 
-Route::get('/dashboard_pengajar_jadwal', function () {
-    return view('dashboard_pengajar_jadwal');
-});
-
-Route::get('/dashboard_pengajar_progress', function () {
-    return view('dashboard_pengajar_progress');
-});
-
-Route::get('/dashboard_pengajar_kalender', function () {
-    return view('dashboard_pengajar_kalender');
+Route::get('/dashboard_pengajar', function () {
+    return view('dashboard_pengajar');
 });
 
 Route::get('/profile-pelajar', function () {
