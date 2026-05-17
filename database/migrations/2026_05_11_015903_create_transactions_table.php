@@ -16,7 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('course_id');
             $table->dateTime('date_time');
-            $table->integer('quantity');
+            $table->enum('status', ['ongoing', 'in_progress', 'waiting', 'completed', 'cancelled'])->default('ongoing');
+            $table->integer('duration')->default(1);
             $table->timestamps();
 
             // Foreign Key constraints
