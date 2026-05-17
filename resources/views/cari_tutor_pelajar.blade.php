@@ -21,7 +21,7 @@
                 <span class="text-xl font-bold tracking-tight">AjarIn</span>
             </div>
             <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
-                <a href="#" class="text-white rounded-md bg-gray-950/50 px-3 py-2 text-sm font-medium text-white">Cari Tutor</a>
+                <a href="#" class="text-white">Cari Tutor</a>
                 <a href="#" class="hover:text-white transition-colors">Dashboard</a>
                 <a href="#" class="hover:text-white transition-colors">Monitoring</a>
             </div>
