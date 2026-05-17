@@ -17,6 +17,10 @@ Route::get('/regis_pelajar', function () {
     return view('regis_pelajar');
 });
 
+Route::get('/home_pelajar', function () {
+    return view('home_pelajar');
+});
+
 Route::get('/testing', function () {
     return view('regist');
 });
@@ -31,8 +35,28 @@ Route::get('/dashboard_pelajar', function () {
     return view('dashboard_pelajar');
 });
 
+Route::get('/dashboard_pengajar_jadwal', function () {
+    return view('dashboard_pengajar_jadwal');
+});
+
+Route::get('/dashboard_pengajar_progress', function () {
+    return view('dashboard_pengajar_progress');
+});
+
+Route::get('/dashboard_pengajar_kalender', function () {
+    return view('dashboard_pengajar_kalender');
+});
+
 Route::get('/cari_tutor_pelajar', function () {
     return view('cari_tutor_pelajar');
+});
+
+Route::get('/request_matching_pelajar', function () {
+    return view('request_matching_pelajar');
+});
+
+Route::get('/booking_pelajar', function () {
+    return view('booking_pelajar');
 });
 
 Route::get('/monitoring_pelajar', function () {
