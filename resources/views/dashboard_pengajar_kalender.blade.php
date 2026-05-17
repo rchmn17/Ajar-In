@@ -7,7 +7,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-[#f8fafc] font-sans antialiased text-slate-800">
+<body class="bg-[#f8fafc] font-sans antialiased text-slate-800 relative">
 
     <nav class="bg-[#1a3652] text-white px-8 py-4 flex items-center justify-between sticky top-0 z-50">
         <div class="flex items-center gap-12">
@@ -77,7 +77,6 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            
             <div class="lg:col-span-3 space-y-8">
                 
                 <div class="flex gap-4 border-b border-slate-200 pb-1 overflow-x-auto">
@@ -93,7 +92,6 @@
                 </div>
 
                 <div class="bg-white rounded-2xl border border-slate-100 shadow-sm p-8">
-                    
                     <div class="mb-8">
                         <h2 class="text-xl font-bold text-[#1a3652] mb-1">Manajemen Ketersediaan</h2>
                         <p class="text-xs text-slate-400">Atur slot waktu mengajarmu. Slot yang kamu buka akan muncul saat murid memilih jadwal.</p>
@@ -103,11 +101,11 @@
                         
                         <div class="xl:col-span-7">
                             <div class="flex items-center justify-between mb-8 px-4">
-                                <button class="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-50">
+                                <button id="prev-month" class="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-50 transition-colors">
                                     <i class="fas fa-chevron-left text-xs"></i>
                                 </button>
-                                <h3 class="font-extrabold text-sm text-[#1a3652]">Mei 2026</h3>
-                                <button class="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-50">
+                                <h3 id="calendar-month-year" class="font-extrabold text-sm text-[#1a3652]">Mei 2026</h3>
+                                <button id="next-month" class="w-8 h-8 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:bg-slate-50 transition-colors">
                                     <i class="fas fa-chevron-right text-xs"></i>
                                 </button>
                             </div>
@@ -118,27 +116,7 @@
                                 @endforeach
                             </div>
 
-                            <div class="grid grid-cols-7 gap-y-3 text-center">
-                                <span></span><span></span><span></span><span></span><span></span>
-                                
-                                @for($i = 1; $i <= 31; $i++)
-                                    @php
-                                        // Simulasi logic style tanggal berdasarkan gambar
-                                        $isToday = ($i == 18);
-                                        $hasDot = ($i >= 17 && $i <= 30);
-                                    @endphp
-                                    <div class="flex flex-col items-center justify-center relative py-1.5">
-                                        <button class="w-10 h-10 rounded-xl text-xs font-bold flex items-center justify-center transition-all
-                                            {{ $isToday ? 'bg-[#1a3652] text-white shadow-md shadow-[#1a3652]/20 scale-105' : 'text-slate-700 hover:bg-slate-50' }}
-                                            {{ $i < 17 ? 'text-slate-300 pointer-events-none' : '' }}">
-                                            {{ $i }}
-                                        </button>
-                                        @if($hasDot)
-                                            <span class="w-1 h-1 rounded-full mt-1 {{ $isToday ? 'bg-white' : 'bg-slate-400' }}"></span>
-                                        @endif
-                                    </div>
-                                @endfor
-                            </div>
+                            <div class="grid grid-cols-7 gap-y-3 text-center" id="calendar-grid"></div>
 
                             <div class="flex items-center gap-6 mt-10 pt-6 border-t border-slate-100 px-2 text-[11px] font-bold text-slate-400">
                                 <div class="flex items-center gap-2">
@@ -156,41 +134,28 @@
                         <div class="xl:col-span-5 flex flex-col justify-between">
                             <div>
                                 <div class="mb-6">
-                                    <h3 class="font-extrabold text-[#1a3652] text-base mb-1">Senin, 18 Mei 2026</h3>
-                                    <p class="text-xs text-slate-400 font-medium">7 slot dipilih</p>
+                                    <h3 id="panel-date-title" class="font-extrabold text-[#1a3652] text-base mb-1">Pilih Tanggal...</h3>
+                                    <p id="panel-slot-counter" class="text-xs text-slate-400 font-medium">0 slot dipilih</p>
                                 </div>
 
                                 <div class="flex gap-2 mb-6">
-                                    <button class="px-4 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-500 hover:bg-slate-100 transition-colors">Pilih Semua</button>
-                                    <button class="px-4 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-500 hover:bg-slate-100 transition-colors">Hapus Semua</button>
+                                    <button onclick="selectAllSlots()" class="px-4 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-500 hover:bg-slate-100 transition-colors">Pilih Semua</button>
+                                    <button onclick="clearAllSlots()" class="px-4 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-[10px] font-bold text-slate-500 hover:bg-slate-100 transition-colors">Hapus Semua</button>
                                 </div>
 
-                                <div class="grid grid-cols-3 gap-2.5">
+                                <div class="grid grid-cols-3 gap-2.5" id="slots-container">
                                     @php
                                         $slots = [
-                                            ['time' => '07:00', 'selected' => false],
-                                            ['time' => '08:00', 'selected' => true],
-                                            ['time' => '09:00', 'selected' => true],
-                                            ['time' => '10:00', 'selected' => true],
-                                            ['time' => '11:00', 'selected' => true],
-                                            ['time' => '12:00', 'selected' => false],
-                                            ['time' => '13:00', 'selected' => false],
-                                            ['time' => '14:00', 'selected' => false],
-                                            ['time' => '15:00', 'selected' => false],
-                                            ['time' => '16:00', 'selected' => false],
-                                            ['time' => '17:00', 'selected' => false],
-                                            ['time' => '18:00', 'selected' => true],
-                                            ['time' => '19:00', 'selected' => true],
-                                            ['time' => '20:00', 'selected' => true],
-                                            ['time' => '21:00', 'selected' => false],
+                                            ['time' => '07:00'], ['time' => '08:00'], ['time' => '09:00'], 
+                                            ['time' => '10:00'], ['time' => '11:00'], ['time' => '12:00'], 
+                                            ['time' => '13:00'], ['time' => '14:00'], ['time' => '15:00'], 
+                                            ['time' => '16:00'], ['time' => '17:00'], ['time' => '18:00'], 
+                                            ['time' => '19:00'], ['time' => '20:00'], ['time' => '21:00'],
                                         ];
                                     @endphp
 
                                     @foreach($slots as $slot)
-                                        <button class="py-3 border rounded-xl text-xs font-bold transition-all
-                                            {{ $slot['selected'] 
-                                                ? 'bg-[#1a3652] text-white border-transparent shadow-sm' 
-                                                : 'bg-white border-slate-100 text-slate-600 hover:border-slate-300' }}">
+                                        <button onclick="toggleSlot(this)" class="slot-btn py-3 border border-slate-100 bg-white text-slate-600 rounded-xl text-xs font-bold transition-all hover:border-slate-300">
                                             {{ $slot['time'] }}
                                         </button>
                                     @endforeach
@@ -198,11 +163,11 @@
                             </div>
 
                             <div class="space-y-3 mt-8">
-                                <button class="w-full py-3.5 bg-[#1a3652] text-white rounded-xl text-xs font-bold shadow-lg shadow-[#1a3652]/10 hover:bg-[#12273c] transition-all flex items-center justify-center gap-2">
-                                    <i class="far fa-save"></i> Simpan untuk Senin ini
+                                <button id="save-schedule-btn" class="w-full py-3.5 bg-[#1a3652] text-white rounded-xl text-xs font-bold shadow-lg shadow-[#1a3652]/10 hover:bg-[#12273c] transition-all flex items-center justify-center gap-2">
+                                    <i class="far fa-save"></i> Simpan untuk <span id="save-day-text">Hari</span> ini
                                 </button>
-                                <button class="w-full py-3.5 bg-white border border-slate-200 text-slate-500 rounded-xl text-xs font-bold hover:bg-slate-50 transition-all">
-                                    Terapkan ke semua Senin di bulan ini
+                                <button id="save-all-month-btn" class="w-full py-3.5 bg-white border border-slate-200 text-slate-500 rounded-xl text-xs font-bold hover:bg-slate-50 transition-all">
+                                    Terapkan ke semua <span id="apply-all-day-text">Hari</span> di bulan ini
                                 </button>
                             </div>
                         </div>
@@ -213,49 +178,205 @@
         </div>
     </main>
 
-    <footer class="bg-[#1a3652] text-white pt-20 pb-10 px-8 mt-10">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
-                <div class="space-y-6">
-                    <div class="flex items-center gap-2">
-                        <div class="bg-white/20 p-2 rounded-lg">
-                            <i class="fas fa-book-open text-xl"></i>
-                        </div>
-                        <span class="text-2xl font-bold tracking-tight">AjarIn</span>
-                    </div>
-                    <p class="text-slate-400 text-sm leading-relaxed">Platform micro-learning yang menghubungkan pelajar dengan pengajar ahli secara spesifik.</p>
-                    <div class="flex items-center gap-3">
-                        @foreach(['twitter', 'instagram', 'linkedin-in', 'facebook-f'] as $icon)
-                            <a href="#" class="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-slate-400 hover:bg-white/10 hover:text-white transition-all">
-                                <i class="fab fa-{{ $icon }} text-xs"></i>
-                            </a>
-                        @endforeach
-                    </div>
-                </div>
-                @foreach([
-                    'Platform' => ['Cari Tutor', 'Dashboard Pelajar', 'Dashboard Tutor', 'Monitoring Board'],
-                    'Kategori' => ['Teknologi', 'Akademis', 'Professional', 'Bahasa'],
-                    'Perusahaan' => ['Tentang Kami', 'Karir', 'Blog', 'Kontak']
-                ] as $title => $links)
-                <div>
-                    <h5 class="font-bold mb-6 text-sm tracking-wide text-white/50">{{ $title }}</h5>
-                    <ul class="space-y-4 text-slate-400 text-sm font-medium">
-                        @foreach($links as $link)
-                            <li><a href="#" class="hover:text-white transition-colors">{{ $link }}</a></li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endforeach
+    <div id="success-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden items-center justify-center z-[100] p-4 transition-all opacity-0 pointer-events-none duration-300">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 text-center shadow-xl transform scale-95 transition-transform duration-300">
+            <div class="w-16 h-16 bg-emerald-50 text-emerald-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check-circle text-3xl animate-pulse"></i>
             </div>
-            <div class="flex flex-col md:flex-row items-center justify-between pt-10 border-t border-white/10 text-[10px] font-bold uppercase tracking-widest text-slate-500">
-                <p>© 2026 AjarIn. Semua hak dilindungi.</p>
-                <div class="flex items-center gap-8 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-white transition-colors">Syarat & Ketentuan</a>
-                    <a href="#" class="hover:text-white transition-colors">Privasi</a>
-                    <a href="#" class="hover:text-white transition-colors">Cookie</a>
-                </div>
-            </div>
+            <h3 class="text-lg font-black text-[#1a3652] mb-2">Jadwal Berhasil Disimpan!</h3>
+            <p class="text-xs text-slate-500 leading-relaxed mb-6">
+                Slot ketersediaan mengajar Anda untuk <span id="modal-target-date" class="font-bold text-slate-700">Hari ini</span> telah sukses diperbarui dan siap dipilih oleh murid.
+            </p>
+            <button onclick="closeSuccessModal()" class="w-full py-3.5 bg-[#1a3652] text-white rounded-xl text-xs font-bold hover:bg-[#12273c] transition-colors shadow-md shadow-[#1a3652]/10">
+                Selesai
+            </button>
         </div>
+    </div>
+
+    <footer class="bg-[#1a3652] text-white pt-20 pb-10 px-8 mt-10">
+        <p class="text-center text-xs text-slate-400">© 2026 AjarIn. Semua hak dilindungi.</p>
     </footer>
+
+    <script>
+        let currentDate = new Date();
+        let currentYear = currentDate.getFullYear();
+        let currentMonth = currentDate.getMonth(); 
+
+        const monthNames = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+        const dayNames = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+        let activeFullDate = ""; 
+
+        document.addEventListener("DOMContentLoaded", function() {
+            renderCalendar(currentYear, currentMonth);
+
+            document.getElementById('prev-month').addEventListener('click', () => {
+                currentMonth--;
+                if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+                renderCalendar(currentYear, currentMonth);
+            });
+
+            document.getElementById('next-month').addEventListener('click', () => {
+                currentMonth++;
+                if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+                renderCalendar(currentYear, currentMonth);
+            });
+
+            document.getElementById('save-schedule-btn').addEventListener('click', openSuccessModal);
+            document.getElementById('save-all-month-btn').addEventListener('click', openSuccessModal);
+        });
+
+        function renderCalendar(year, month) {
+            const grid = document.getElementById('calendar-grid');
+            const title = document.getElementById('calendar-month-year');
+            
+            title.innerText = `${monthNames[month]} ${year}`;
+            grid.innerHTML = ''; 
+
+            const firstDayIndex = new Date(year, month, 1).getDay();
+            const totalDays = new Date(year, month + 1, 0).getDate();
+            
+            for (let i = 0; i < firstDayIndex; i++) {
+                const blank = document.createElement('span');
+                grid.appendChild(blank);
+            }
+
+            const today = new Date();
+            
+            for (let i = 1; i <= totalDays; i++) {
+                const dayDiv = document.createElement('div');
+                dayDiv.className = 'flex flex-col items-center justify-center relative py-1.5';
+
+                const btn = document.createElement('button');
+                btn.innerText = i;
+                
+                const itemDate = new Date(year, month, i);
+                const isToday = itemDate.toDateString() === today.toDateString();
+                const isPast = itemDate < new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                const hasDot = !isPast && (i >= 17 && i <= 30); 
+
+                btn.className = `date-btn w-10 h-10 rounded-xl text-xs font-bold flex items-center justify-center transition-all`;
+                
+                if (isToday) {
+                    btn.classList.add('bg-[#1a3652]', 'text-white', 'shadow-md', 'shadow-[#1a3652]/20', 'scale-105', 'active-date');
+                    activeFullDate = `${dayNames[itemDate.getDay()]}, ${i} ${monthNames[month]} ${year}`;
+                    updateRightPanel(activeFullDate);
+                } else if (isPast) {
+                    btn.classList.add('text-slate-300', 'cursor-not-allowed');
+                    btn.setAttribute('disabled', 'true');
+                } else {
+                    btn.classList.add('text-slate-700', 'hover:bg-slate-50', 'cursor-pointer');
+                }
+
+                const displayDate = `${dayNames[itemDate.getDay()]}, ${i} ${monthNames[month]} ${year}`;
+                btn.setAttribute('data-display', displayDate);
+
+                if (!isPast) {
+                    btn.addEventListener('click', function() {
+                        handleDateClick(this);
+                    });
+                }
+
+                dayDiv.appendChild(btn);
+
+                if (hasDot) {
+                    const dot = document.createElement('span');
+                    dot.className = `date-dot w-1 h-1 rounded-full mt-1 ${isToday ? 'bg-white' : 'bg-slate-400'}`;
+                    dayDiv.appendChild(dot);
+                }
+
+                grid.appendChild(dayDiv);
+            }
+        }
+
+        function handleDateClick(clickedBtn) {
+            const allDateBtns = document.querySelectorAll('.date-btn:not([disabled])');
+            
+            allDateBtns.forEach(b => {
+                b.classList.remove('bg-[#1a3652]', 'text-white', 'shadow-md', 'shadow-[#1a3652]/20', 'scale-105', 'active-date');
+                b.classList.add('text-slate-700', 'hover:bg-slate-50');
+                
+                const dot = b.nextElementSibling;
+                if(dot && dot.classList.contains('date-dot')) {
+                    dot.classList.remove('bg-white');
+                    dot.classList.add('bg-slate-400');
+                }
+            });
+
+            clickedBtn.classList.remove('text-slate-700', 'hover:bg-slate-50');
+            clickedBtn.classList.add('bg-[#1a3652]', 'text-white', 'shadow-md', 'shadow-[#1a3652]/20', 'scale-105', 'active-date');
+            
+            const activeDot = clickedBtn.nextElementSibling;
+            if(activeDot && activeDot.classList.contains('date-dot')) {
+                activeDot.classList.remove('bg-slate-400');
+                activeDot.classList.add('bg-white');
+            }
+
+            activeFullDate = clickedBtn.getAttribute('data-display');
+            updateRightPanel(activeFullDate);
+        }
+
+        function updateRightPanel(fullDateString) {
+            document.getElementById('panel-date-title').innerText = fullDateString;
+            const dayName = fullDateString.split(',')[0];
+            document.getElementById('save-day-text').innerText = dayName;
+            document.getElementById('apply-all-day-text').innerText = dayName;
+        }
+
+        function openSuccessModal() {
+            const modal = document.getElementById('success-modal');
+            const modalContent = modal.querySelector('div');
+            const targetDateText = document.getElementById('modal-target-date');
+
+            targetDateText.innerText = activeFullDate; 
+
+            modal.classList.remove('hidden', 'opacity-0', 'pointer-events-none');
+            modal.classList.add('flex', 'opacity-100');
+            modalContent.classList.remove('scale-95');
+            modalContent.classList.add('scale-100');
+        }
+
+        function closeSuccessModal() {
+            const modal = document.getElementById('success-modal');
+            const modalContent = modal.querySelector('div');
+
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modalContent.classList.remove('scale-100');
+            modalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function toggleSlot(btnElement) {
+            btnElement.classList.toggle('is-selected');
+            if(btnElement.classList.contains('is-selected')) {
+                btnElement.classList.remove('bg-white', 'border-slate-100', 'text-slate-600', 'hover:border-slate-300');
+                btnElement.classList.add('bg-[#1a3652]', 'text-white', 'border-transparent', 'shadow-sm');
+            } else {
+                btnElement.classList.add('bg-white', 'border-slate-100', 'text-slate-600', 'hover:border-slate-300');
+                btnElement.classList.remove('bg-[#1a3652]', 'text-white', 'border-transparent', 'shadow-sm');
+            }
+            updateCounter();
+        }
+
+        function selectAllSlots() {
+            document.querySelectorAll('.slot-btn').forEach(slot => {
+                if(!slot.classList.contains('is-selected')) toggleSlot(slot);
+            });
+        }
+
+        function clearAllSlots() {
+            document.querySelectorAll('.slot-btn').forEach(slot => {
+                if(slot.classList.contains('is-selected')) toggleSlot(slot);
+            });
+        }
+
+        function updateCounter() {
+            const count = document.querySelectorAll('.slot-btn.is-selected').length;
+            document.getElementById('panel-slot-counter').innerText = count + ' slot dipilih';
+        }
+    </script>
 </body>
 </html>
