@@ -140,7 +140,7 @@
                 </form>
 
                 <p class="text-center text-xs text-slate-500 mt-10">
-                    Belum punya akun? <a href="#" class="text-slate-900 font-extrabold hover:underline">Daftar Sekarang</a>
+                    Belum punya akun? <a href="{{ route('instructor.register') }}" class="text-slate-900 font-extrabold hover:underline">Daftar Sekarang</a>
                 </p>
 
                 <div class="mt-12 p-6 bg-slate-50 border border-slate-100 rounded-[2rem]">
