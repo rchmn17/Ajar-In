@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,38 +9,33 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-
 <body class="bg-[#f8fafc] font-sans antialiased text-slate-800">
 
     <!-- NAVBAR -->
     <nav class="bg-[#1a3652] text-white px-8 py-4 flex items-center justify-between sticky top-0 z-50">
         <div class="flex items-center gap-12">
-            <div class="shrink-0">
-                <a href="/" class="block hover:opacity-90 transition-opacity">
-                    <img src="{{ asset('asset/Logo_AjarIn.png') }}" alt="Logo AjarIn" class="h-10 w-auto" />
-                </a>
+            <div class="flex items-center gap-2">
+                <div class="bg-white/20 p-1.5 rounded-lg">
+                    <i class="fas fa-book-open text-lg"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight">AjarIn</span>
             </div>
             <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
                 <a href="#" class="hover:text-white transition-colors">Cari Tutor</a>
-                <a href="/student/search" class="hover:text-white transition-colors">Dashboard</a>
-                <a href="#" class="rounded-md bg-gray-950/50 px-3 py-2 text-sm font-medium text-white">Monitoring</a>
+                <a href="#" class="hover:text-white transition-colors">Dashboard</a>
+                <a href="#" class="text-white border-b-2 border-white pb-1">Monitoring</a>
             </div>
         </div>
         <div class="flex items-center gap-4">
-            <button
-                class="bg-white/10 px-4 py-1.5 rounded-full text-xs font-semibold border border-white/10 flex items-center gap-2">
+            <button class="bg-white/10 px-4 py-1.5 rounded-full text-xs font-semibold border border-white/10 flex items-center gap-2">
                 <i class="fas fa-user-graduate"></i> Pelajar
             </button>
             <div class="relative cursor-pointer">
                 <i class="far fa-bell text-xl"></i>
-                <span
-                    class="absolute -top-1 -right-1 bg-red-500 text-[10px] w-4 h-4 flex items-center justify-center rounded-full">3</span>
+                <span class="absolute -top-1 -right-1 bg-red-500 text-[10px] w-4 h-4 flex items-center justify-center rounded-full">3</span>
             </div>
-            <div
-                class="flex items-center gap-3 bg-white/10 pl-2 pr-4 py-1.5 rounded-full border border-white/10 cursor-pointer">
-                <div
-                    class="w-8 h-8 rounded-full bg-slate-400 flex items-center justify-center font-bold text-xs uppercase">
-                    RP</div>
+            <div class="flex items-center gap-3 bg-white/10 pl-2 pr-4 py-1.5 rounded-full border border-white/10 cursor-pointer">
+                <div class="w-8 h-8 rounded-full bg-slate-400 flex items-center justify-center font-bold text-xs uppercase">RP</div>
                 <span class="text-sm font-semibold">Rizky</span>
                 <i class="fas fa-chevron-down text-[10px] text-slate-400"></i>
             </div>
@@ -53,14 +47,13 @@
     <header class="bg-white border-b border-slate-200/60 py-10 px-8 shadow-sm">
         <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
-                <nav
-                    class="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">
+                <nav class="flex items-center gap-2 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-2">
                     <i class="fas fa-chart-bar text-[#1a3652]"></i>
                     <span>Monitoring Board</span>
                 </nav>
                 <h1 class="text-3xl font-bold text-[#1a3652]">Project & Tugas Murid</h1>
             </div>
-
+            
             <!-- Progress Bar di Header -->
             <div class="flex items-center gap-4 bg-slate-50 px-5 py-3 rounded-2xl border border-slate-100">
                 <div class="w-40 h-2 bg-slate-200 rounded-full overflow-hidden">
@@ -101,59 +94,51 @@
             @endphp
 
             @foreach($columns as $title => $data)
-                <div class="bg-[#f1f5f9]/60 p-6 rounded-[2rem] border border-slate-100 flex flex-col min-h-[500px]">
-                    <div class="flex items-center justify-between mb-8 px-1">
-                        <div class="flex items-center gap-3">
-                            <h3
-                                class="font-bold text-sm tracking-tight {{ $title == 'In Progress' ? 'text-blue-600' : ($title == 'Done' ? 'text-emerald-600' : 'text-slate-600') }}">
-                                {{ $title }}
-                            </h3>
-                            <span
-                                class="bg-white px-2.5 py-0.5 rounded-full text-[10px] font-bold text-slate-400 border border-slate-100 shadow-sm">
-                                {{ $data['count'] }}
+            <div class="bg-[#f1f5f9]/60 p-6 rounded-[2rem] border border-slate-100 flex flex-col min-h-[500px]">
+                <div class="flex items-center justify-between mb-8 px-1">
+                    <div class="flex items-center gap-3">
+                        <h3 class="font-bold text-sm tracking-tight {{ $title == 'In Progress' ? 'text-blue-600' : ($title == 'Done' ? 'text-emerald-600' : 'text-slate-600') }}">
+                            {{ $title }}
+                        </h3>
+                        <span class="bg-white px-2.5 py-0.5 rounded-full text-[10px] font-bold text-slate-400 border border-slate-100 shadow-sm">
+                            {{ $data['count'] }}
+                        </span>
+                    </div>
+                    <button class="w-7 h-7 rounded-full bg-white flex items-center justify-center text-slate-300 border border-slate-100 hover:text-[#1a3652] hover:border-[#1a3652] transition-all">
+                        <i class="fas fa-plus text-[10px]"></i>
+                    </button>
+                </div>
+
+                <div class="space-y-5">
+                    @foreach($data['tasks'] as $task)
+                    <div class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 group cursor-pointer">
+                        <div class="mb-4">
+                            @php
+                                $pColor = $task['priority'] == 'Tinggi' ? 'bg-red-50 text-red-500' : ($task['priority'] == 'Sedang' ? 'bg-amber-50 text-amber-500' : 'bg-slate-50 text-slate-500');
+                            @endphp
+                            <span class="px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-tighter {{ $pColor }}">
+                                <i class="fas fa-flag mr-1.5"></i> {{ $task['priority'] }}
                             </span>
                         </div>
-                        <button
-                            class="w-7 h-7 rounded-full bg-white flex items-center justify-center text-slate-300 border border-slate-100 hover:text-[#1a3652] hover:border-[#1a3652] transition-all">
-                            <i class="fas fa-plus text-[10px]"></i>
-                        </button>
-                    </div>
-
-                    <div class="space-y-5">
-                        @foreach($data['tasks'] as $task)
-                            <div
-                                class="bg-white p-6 rounded-2xl border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 group cursor-pointer">
-                                <div class="mb-4">
-                                    @php
-                                        $pColor = $task['priority'] == 'Tinggi' ? 'bg-red-50 text-red-500' : ($task['priority'] == 'Sedang' ? 'bg-amber-50 text-amber-500' : 'bg-slate-50 text-slate-500');
-                                    @endphp
-                                    <span
-                                        class="px-2.5 py-1 rounded-lg text-[9px] font-black uppercase tracking-tighter {{ $pColor }}">
-                                        <i class="fas fa-flag mr-1.5"></i> {{ $task['priority'] }}
-                                    </span>
+                        
+                        <h4 class="font-bold text-slate-800 text-sm mb-2 leading-tight group-hover:text-[#1a3652] transition-colors">{{ $task['title'] }}</h4>
+                        <p class="text-[11px] text-slate-400 leading-relaxed mb-6">{{ $task['desc'] }}</p>
+                        
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-50">
+                            <div class="flex items-center gap-2">
+                                <div class="w-6 h-6 rounded-full bg-slate-200 overflow-hidden">
+                                    <img src="https://ui-avatars.com/api/?name={{ urlencode($task['tutor']) }}&background=random" class="w-full h-full object-cover">
                                 </div>
-
-                                <h4
-                                    class="font-bold text-slate-800 text-sm mb-2 leading-tight group-hover:text-[#1a3652] transition-colors">
-                                    {{ $task['title'] }}</h4>
-                                <p class="text-[11px] text-slate-400 leading-relaxed mb-6">{{ $task['desc'] }}</p>
-
-                                <div class="flex items-center justify-between pt-4 border-t border-slate-50">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-6 h-6 rounded-full bg-slate-200 overflow-hidden">
-                                            <img src="https://ui-avatars.com/api/?name={{ urlencode($task['tutor']) }}&background=random"
-                                                class="w-full h-full object-cover">
-                                        </div>
-                                        <span class="text-[10px] font-bold text-slate-500">{{ $task['tutor'] }}</span>
-                                    </div>
-                                    <span class="text-[10px] font-bold text-slate-300">
-                                        <i class="far fa-calendar-alt mr-1"></i> {{ $task['date'] }}
-                                    </span>
-                                </div>
+                                <span class="text-[10px] font-bold text-slate-500">{{ $task['tutor'] }}</span>
                             </div>
-                        @endforeach
+                            <span class="text-[10px] font-bold text-slate-300">
+                                <i class="far fa-calendar-alt mr-1"></i> {{ $task['date'] }}
+                            </span>
+                        </div>
                     </div>
+                    @endforeach
                 </div>
+            </div>
             @endforeach
         </div>
     </main>
@@ -169,23 +154,21 @@
                         </div>
                         <span class="text-2xl font-bold tracking-tight">AjarIn</span>
                     </div>
-                    <p class="text-slate-400 text-sm leading-relaxed">Platform micro-learning yang menghubungkan pelajar
-                        dengan pengajar ahli secara spesifik.</p>
+                    <p class="text-slate-400 text-sm leading-relaxed">Platform micro-learning yang menghubungkan pelajar dengan pengajar ahli secara spesifik.</p>
                 </div>
                 @foreach([
-                            'Platform' => ['Cari Tutor', 'Dashboard Pelajar', 'Monitoring Board'],
-                            'Kategori' => ['Teknologi', 'Akademis', 'Bahasa'],
-                            'Perusahaan' => ['Tentang Kami', 'Karir', 'Kontak']
-                        ] as $title => $links)
-                    <div>
-                            <h5 class="font-bold mb-6 text-sm tracking-wide uppercase text-white/50">{{ $title }}</h5>
-                            <ul class="space-y-4 text-slate-400 text-sm">
-                                @foreach($links as $link)
-                                    <li><a href="#" class="hover:text-white transition-colors">{{ $link }}</a></li>
-                                @endforeach
-
-                           </ul>
-                        </div>
+                    'Platform' => ['Cari Tutor', 'Dashboard Pelajar', 'Monitoring Board'],
+                    'Kategori' => ['Teknologi', 'Akademis', 'Bahasa'],
+                    'Perusahaan' => ['Tentang Kami', 'Karir', 'Kontak']
+                ] as $title => $links)
+                <div>
+                    <h5 class="font-bold mb-6 text-sm tracking-wide uppercase text-white/50">{{ $title }}</h5>
+                    <ul class="space-y-4 text-slate-400 text-sm">
+                        @foreach($links as $link)
+                            <li><a href="#" class="hover:text-white transition-colors">{{ $link }}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
                 @endforeach
             </div>
             <div class="pt-10 border-t border-white/10 text-[10px] font-bold uppercase tracking-widest text-slate-500 flex flex-col md:flex-row justify-between items-center gap-4">
@@ -193,8 +176,7 @@
                 <div class="flex gap-8">
                     <a href="#" class="hover:text-white transition-colors">Syarat & Ketentuan</a>
                     <a href="#" class="hover:text-white transition-colors">Privasi</a>
-       
-         </div>
+                </div>
             </div>
         </div>
     </footer>
