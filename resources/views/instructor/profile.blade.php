@@ -87,8 +87,8 @@
                     </div>
                 </div>
                 <div>
-                    <h3 class="text-sm font-black text-[#1a3652] mb-0.5">Ahmad Fauzi</h3>
-                    <p class="text-[11px] text-slate-400 font-medium mb-1">tutor@ajarin.id</p>
+                    <h3 class="text-sm font-black text-[#1a3652] mb-0.5">{{ Auth::user()->name }}</h3>
+                    <p class="text-[11px] text-slate-400 font-medium mb-1">{{ Auth::user()->email }}</p>
                     <p class="text-[10px] text-slate-400 font-bold">Foto profesional · Maks. 2MB</p>
                 </div>
             </div>
@@ -109,17 +109,17 @@
         <div id="tab-basic" class="form-content active bg-white rounded-3xl border border-slate-100 shadow-sm p-8 space-y-6">
             <div class="space-y-2">
                 <label class="text-xs font-black text-slate-700 block">Nama Lengkap <span class="text-red-500">*</span></label>
-                <input type="text" value="Ahmad Fauzi" required class="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:border-[#1a3652]">
+                <input type="text" value="{{ Auth::user()->name }}" required class="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:border-[#1a3652]">
             </div>
             <div class="space-y-2">
                 <label class="text-xs font-black text-slate-700 block">Email <span class="text-red-500">*</span></label>
-                <input type="email" value="tutor@ajarin.id" required class="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:border-[#1a3652]">
+                <input type="email" value="{{ Auth::user()->email }}" required class="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:border-[#1a3652]">
             </div>
             <div class="space-y-2">
                 <label class="text-xs font-black text-slate-700 block">Nomor Telepon</label>
                 <div class="flex gap-2">
                     <div class="px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-500 select-none">+62</div>
-                    <input type="tel" value="81234567890" class="flex-1 px-4 py-3 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:border-[#1a3652]">
+                    <input type="tel" value="{{ Auth::user()->phone }}" class="flex-1 px-4 py-3 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 outline-none focus:border-[#1a3652]">
                 </div>
             </div>
             <div class="pt-4">
@@ -135,19 +135,6 @@
                 <div class="relative">
                     <textarea id="bio-textarea" oninput="countChar(this, 600, 'bio-count')" rows="4" maxlength="600" placeholder="Ceritakan pengalaman mengajar..." class="w-full px-4 py-3 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 outline-none focus:border-[#1a3652] resize-none leading-relaxed">Berpengalaman lebih dari 5 tahun dalam mengajar mata pelajaran Matematika tingkat SMA dan olimpiade akademik.</textarea>
                     <span id="bio-count" class="absolute bottom-3 right-4 text-[10px] font-bold text-slate-400">122/600</span>
-                </div>
-            </div>
-
-            <div class="space-y-2">
-                <label class="text-xs font-black text-slate-700 block">Keahlian / Mata Pelajaran yang Diajarkan</label>
-                <div class="border border-slate-200 rounded-xl p-3 space-y-2.5 bg-white">
-                    <div id="tags-wrapper" class="flex flex-wrap gap-2">
-                        <span class="inline-flex items-center gap-2 bg-slate-50 border border-slate-100 text-slate-700 text-[11px] font-bold px-2.5 py-1 rounded-lg">Matematika <button type="button" onclick="this.parentNode.remove()" class="text-slate-400 hover:text-red-500"><i class="fas fa-times text-[10px]"></i></button></span>
-                        <span class="inline-flex items-center gap-2 bg-slate-50 border border-slate-100 text-slate-700 text-[11px] font-bold px-2.5 py-1 rounded-lg">Fisika <button type="button" onclick="this.parentNode.remove()" class="text-slate-400 hover:text-red-500"><i class="fas fa-times text-[10px]"></i></button></span>
-                        <span class="inline-flex items-center gap-2 bg-slate-50 border border-slate-100 text-slate-700 text-[11px] font-bold px-2.5 py-1 rounded-lg">Kalkulus <button type="button" onclick="this.parentNode.remove()" class="text-slate-400 hover:text-red-500"><i class="fas fa-times text-[10px]"></i></button></span>
-                        <span class="inline-flex items-center gap-2 bg-slate-50 border border-slate-100 text-slate-700 text-[11px] font-bold px-2.5 py-1 rounded-lg">Statistika <button type="button" onclick="this.parentNode.remove()" class="text-slate-400 hover:text-red-500"><i class="fas fa-times text-[10px]"></i></button></span>
-                    </div>
-                    <input type="text" id="tag-input" onkeydown="addSkillTag(event)" placeholder="Ketik skill lalu tekan Enter..." class="w-full text-xs font-semibold text-slate-700 outline-none bg-transparent">
                 </div>
             </div>
 
