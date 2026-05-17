@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -31,9 +33,9 @@ Route::post('/student/regist', [UserController::class, 'registerStudent'])->name
 Route::get('/instructor/regist', [UserController::class, 'showInstructorRegisterForm'])->name('instructor.register');
 Route::post('/instructor/regist', [UserController::class, 'registerInstructor'])->name('instructor.register.submit');
 
-Route::get('/dashboard-pelajar', function () {
-    return view('dashboard_pelajar'); 
-})->name('pelajar.dashboard');
+Route::get('/dashboard_pelajar', function () {
+    return view('dashboard_pelajar');
+});
 
 Route::get('/dashboard_pengajar_jadwal', function () {
     return view('dashboard_pengajar_jadwal');
@@ -46,10 +48,6 @@ Route::get('/dashboard_pengajar_progress', function () {
 Route::get('/dashboard_pengajar_kalender', function () {
     return view('dashboard_pengajar_kalender');
 });
-
-Route::get('/profile-pelajar', function () {
-    return view('profile_pelajar'); 
-})->name('pelajar.profile');
 
 Route::get('/cari_tutor_pelajar', function () {
     return view('cari_tutor_pelajar');
@@ -80,13 +78,22 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => ['auth','role:instructor']], function () {
-    Route::get('/instructor/dashboard', function () {
-        return view('instructor.dashboard');
-    })->name('instructor.dashboard');
+    Route::get('/instructor/dashboard', [DashboardController::class, 'schedule'])->name('instructor.dashboard');
+    
 });
 
 Route::group(['middleware' => ['auth','role:student']], function () {
     Route::get('/student/dashboard', function () {
         return view('student.dashboard');
     })->name('student.dashboard');
+});
+
+
+Route::group(['middleware' => ['auth','role:instructor']], function () {
+    // Menampilkan halaman dashboard (asumsi Anda sudah punya routenya)
+    Route::get('instructor/dashboard/calendar', [DashboardController::class, 'calendar'])->name('instructor.dashboard.calendar');
+    Route::get('instructor/dashboard/progress', [DashboardController::class, 'progress'])->name('instructor.dashboard.progress');
+    Route::get('instructor/dashboard/schedule', [DashboardController::class, 'schedule'])->name('instructor.dashboard.schedule');
+    Route::get('/api/schedules', [ScheduleController::class, 'getSchedules']);
+    Route::post('/api/schedules', [ScheduleController::class, 'storeSchedules']);
 });
