@@ -21,26 +21,27 @@
         <section class="bg-[#1a3652] pt-12 pb-16 px-8">
             <div class="max-w-6xl mx-auto">
                 <h1 class="text-4xl font-bold text-white mb-8">Temukan Pengajar Terbaikmu</h1>
-                <form action="" method="POST" class="flex items-center gap-4 mb-8">
+                <form action="{{ route('student.search') }}" method="GET" class="flex items-center gap-4 mb-8">
                     <div class="relative flex-1">
                         <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                        <input type="text" placeholder="Cari skill spesifik... (cth: Laravel Middleware)" 
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari skill spesifik... (cth: Laravel Middleware)" 
                             class="w-full pl-12 pr-4 py-4 rounded-xl bg-white border-none focus:ring-4 focus:ring-white/20 outline-none text-sm shadow-xl">
                     </div>
                     <button type="submit" class="bg-[#e2d1b9] text-[#1a3652] px-6 py-4 rounded-xl font-bold text-sm shadow-lg hover:bg-[#d4c1a8] transition-all whitespace-nowrap">
-                        Request Match
+                        Cari Tutor
                     </button>
                 </form>
-                
             </div>
         </section>
 
         <main class="max-w-7xl mx-auto px-8 mt-12">
-            <p class="text-slate-400 text-xs font-bold mb-8 uppercase tracking-widest">Menampilkan <span class="text-slate-800">{{ isset($courses) ? $courses->count() : 0 }}</span> Kursus Pilihan</p>
+            <p class="text-slate-400 text-xs font-bold mb-8 uppercase tracking-widest">
+                Menampilkan <span class="text-slate-800">{{ isset($courses) ? $courses->count() : 0 }}</span> Kursus Pilihan
+            </p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
                 @if(isset($courses))
-                    @foreach($courses as $course)
+                    @forelse($courses as $course)
                     <div class="bg-white rounded-[2rem] border border-slate-100 shadow-sm overflow-hidden flex flex-col group hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                         <div class="bg-[#1a3652] h-24 p-6 relative">
                             <span class="absolute right-6 top-6 px-3 py-1 bg-white/10 backdrop-blur-md rounded-full text-[10px] font-bold text-white uppercase tracking-widest border border-white/10">
@@ -76,7 +77,12 @@
                             </div>
                         </div>
                     </div>
-                    @endforeach
+                    @empty
+                    <div class="col-span-full text-center py-12 bg-white rounded-3xl border border-dashed border-slate-200">
+                        <i class="fas fa-folder-open text-slate-300 text-4xl mb-3"></i>
+                        <p class="text-sm font-medium text-slate-500">Maaf, kursus atau skill yang Anda cari belum tersedia.</p>
+                    </div>
+                    @endforelse
                 @endif
             </div>
         </main>
@@ -113,7 +119,6 @@
             </div>
 
             <div class="p-6 overflow-y-auto max-h-[70vh]">
-                
                 <div id="step-content-schedule" class="space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
                         <div class="md:col-span-7 border border-slate-100 rounded-xl p-3 bg-slate-50/40">
@@ -204,7 +209,6 @@
     <x-footer></x-footer>
 
     <script>
-        // 1. Deklarasi semua variabel DOM agar tidak error (Sangat Penting!)
         const overlay = document.getElementById('booking-modal-overlay');
         const modalBox = document.getElementById('modal-box');
         const mainWrapper = document.getElementById('main-content-wrapper');
@@ -214,7 +218,6 @@
         const badgeConfirm = document.getElementById('step-badge-confirm');
         const badgeSuccess = document.getElementById('step-badge-success');
 
-        // Variabel Data Booking
         let currentlySelectedTutorName = "";
         let selectedCourseId = null;
         let basePrice = 0;
@@ -222,29 +225,24 @@
         let selectedTimeStr = "";
         let durationMultiplier = 1;
 
-        // 2. Fungsi Buka Modal yang menerima 4 parameter
         function openBookingModal(courseName, tutorName, coursePrice, courseId) {
             currentlySelectedTutorName = tutorName;
             selectedCourseId = courseId; 
             basePrice = parseInt(coursePrice, 10);
             
-            // Set identitas header modal
             document.getElementById('modal-target-name').innerHTML = `${courseName} <span class="block text-[11px] text-slate-300 font-normal">Tutor: ${tutorName}</span>`;
             document.getElementById('modal-target-price').innerText = 'Rp' + basePrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + '/jam';
             
-            // Atur tanggal otomatis hari ini untuk contoh
             const today = new Date();
             selectedDateStr = `${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}-${String(today.getDate()).padStart(2,'0')}`;
             document.getElementById('calendar-month-year').innerText = today.toLocaleDateString('id-ID', { month: 'long', year: 'numeric' });
             
-            // Reset state
             selectedTimeStr = "";
             durationMultiplier = 1;
             document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('bg-[#1a3652]', 'text-white'));
             updateDurationUI();
             goToScheduleStep();
 
-            // Animasi Buka Modal
             document.body.classList.add('modal-open');
             overlay.classList.remove('hidden');
             setTimeout(() => {
@@ -254,7 +252,6 @@
             }, 50);
         }
 
-        // 3. Helper Functions untuk navigasi dan UI
         function selectTime(time, btnElement) {
             selectedTimeStr = time;
             document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('bg-[#1a3652]', 'text-white'));
@@ -288,7 +285,6 @@
 
             scheduleContent.classList.add('hidden');
             confirmContent.classList.remove('hidden');
-            
             document.getElementById('circle-2').className = "step-circle w-4 h-4 rounded-full bg-[#1a3652] text-white flex items-center justify-center text-[9px]";
             
             document.getElementById('summary-datetime').innerText = `${selectedDateStr} | ${selectedTimeStr} WIB`;
@@ -298,7 +294,6 @@
             document.getElementById('modal-summary-price').innerText = 'Rp' + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         }
 
-        // 4. Fetch / Submit ke Database
         function submitBookingToDatabase() {
             const btnSubmit = document.getElementById('btn-submit-booking');
             const fullDateTime = `${selectedDateStr} ${selectedTimeStr}`;
@@ -307,7 +302,6 @@
             btnSubmit.innerText = "Memproses...";
             btnSubmit.className = "flex-1 py-3 bg-slate-400 text-white font-bold text-xs rounded-xl cursor-not-allowed";
 
-            // Pastikan meta csrf-token ada di tag <head> HTML Anda
             let tokenElement = document.querySelector('meta[name="csrf-token"]');
             let csrfToken = tokenElement ? tokenElement.getAttribute('content') : '';
 
@@ -328,7 +322,7 @@
             })
             .then(response => response.json())
             .then(result => {
-                if(result.success || result.message) { // Antisipasi jika response success dari backend
+                if(result.success || result.message) { 
                     processPaymentSuccess();
                 } else {
                     alert("Gagal Booking: " + (result.message || 'Error tidak diketahui'));
@@ -337,14 +331,11 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                // Jika sedang tahap testing tanpa backend, hilangkan komentar baris bawah ini untuk Bypass simulasi
-                // processPaymentSuccess(); 
-                alert("Pastikan route dan controller Laravel Anda aktif. Error: " + error.message);
+                alert("Terjadi gangguan jaringan atau rute backend bermasalah.");
                 resetSubmitButton();
             });
         }
 
-        // 5. Fungsi Eksekusi Layar Sukses
         function processPaymentSuccess() {
             const circle2 = document.getElementById('circle-2');
             circle2.innerHTML = '<i class="fas fa-check"></i>';
@@ -357,7 +348,7 @@
             
             document.getElementById('success-datetime').innerText = `${selectedDateStr} pukul ${selectedTimeStr} WIB (${durationMultiplier} jam)`;
             
-            const uniqueRoomId = currentlySelectedTutorName.replace(/[^a-zA-SU-Z0-9]/g, '') + "-" + Math.floor(100000 + Math.random() * 900000);
+            const uniqueRoomId = currentlySelectedTutorName.replace(/[^a-zA-Z0-9]/g, '') + "-" + Math.floor(100000 + Math.random() * 900000);
             const meetUrl = `https://meet.jit.si/ajarin-${uniqueRoomId}`;
             
             document.getElementById('success-meet-link').href = meetUrl;
@@ -367,7 +358,6 @@
             document.getElementById('circle-3').className = "step-circle w-4 h-4 rounded-full bg-[#1a3652] text-white flex items-center justify-center text-[9px]";
         }
 
-        // 6. Reset UI dan Tutup Modal
         function resetSubmitButton() {
             const btnSubmit = document.getElementById('btn-submit-booking');
             btnSubmit.disabled = false;
