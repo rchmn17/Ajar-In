@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -11,6 +12,25 @@ class ScheduleController extends Controller
     /**
      * Mengambil daftar jam yang sudah tidak tersedia berdasarkan tanggal
      */
+
+    public function initial_Instructor()
+    {
+        $user = Auth::user();
+
+        $sessions = Transaction::with('course')
+            ->whereHas('course', function ($query) use ($user) {
+                $query->where('user_id', $user->user_id);
+            })
+            ->orderBy('date_time', 'desc')
+            ->get();
+
+        $schedules = Schedule::with('transaction')
+                ->where('user_id', $user->user_id) 
+                ->get();
+
+        return view("instructor.dashboard_jadwal", compact('sessions', 'schedules'));
+    }
+
     public function getSchedules(Request $request)
     {
         $request->validate([

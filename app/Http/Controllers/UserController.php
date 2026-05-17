@@ -10,6 +10,12 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+    public function instructorProfile()
+    {
+        $user = Auth::user();
+        return view('instructor.profile', compact('user'));
+    }
+
     /**
      * Tampilkan halaman registrasi Student
      */

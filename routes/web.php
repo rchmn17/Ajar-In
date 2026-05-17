@@ -42,10 +42,6 @@ Route::get('/dashboard-pengajar', function () {
     return view('dashboard_pengajar'); 
 })->name('pengajar.dashboard');
 
-Route::get('/profile-pengajar', function () {
-    return view('profile_pengajar'); 
-})->name('pengajar.profile');
-
 Route::get('/cari_tutor_pelajar', function () {
     return view('cari_tutor_pelajar');
 });
@@ -76,7 +72,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 Route::group(['middleware' => ['auth','role:instructor']], function () {
     Route::get('/instructor/dashboard', [DashboardController::class, 'schedule'])->name('instructor.dashboard');
-    
+    Route::get('/instructor/dashboard', [ScheduleController::class, 'initial_Instructor'])->name('instructor.getData');
     
 });
 
@@ -100,6 +96,7 @@ Route::group(['middleware' => ['auth','role:instructor']], function () {
     Route::get('instructor/dashboard/calendar', [DashboardController::class, 'calendar'])->name('instructor.dashboard.calendar');
     Route::get('instructor/dashboard/progress', [DashboardController::class, 'progress'])->name('instructor.dashboard.progress');
     Route::get('instructor/dashboard/schedule', [DashboardController::class, 'schedule'])->name('instructor.dashboard.schedule');
+    Route::get('instructor/profile', [UserController::class, 'instructorProfile'])->name('instructor.profile');
     Route::get('/api/schedules', [ScheduleController::class, 'getSchedules']);
     Route::post('/api/schedules', [ScheduleController::class, 'storeSchedules']);
 });
