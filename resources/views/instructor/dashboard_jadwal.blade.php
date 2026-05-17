@@ -81,12 +81,12 @@
             <div class="lg:col-span-2 space-y-8">
                 
                 <div class="flex gap-4 border-b border-slate-200 pb-1 overflow-x-auto">
-                    <button class="bg-[#1a3652] text-white px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 whitespace-nowrap shadow-md">
+                    <a href="{{ route('instructor.dashboard.schedule') }}" class="bg-[#1a3652] text-white px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 whitespace-nowrap shadow-md">
                         <i class="far fa-calendar-check"></i> Jadwal & Request
-                    </button>
-                    <button class="text-slate-500 hover:text-[#1a3652] hover:bg-slate-100 px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all whitespace-nowrap">
+                    </a>
+                    <a href="{{ route('instructor.dashboard.progress') }}" class="text-slate-500 hover:text-[#1a3652] hover:bg-slate-100 px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all whitespace-nowrap">
                         <i class="fas fa-chart-pie"></i> Progres Murid
-                    </button>
+                    </a>
                     <a href="{{ route('instructor.dashboard.calendar') }}" class="text-slate-500 hover:text-[#1a3652] hover:bg-slate-100 px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition-all whitespace-nowrap">
                         <i class="far fa-calendar-alt"></i> Kalender Ketersediaan
                     </a>
