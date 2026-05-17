@@ -1,19 +1,12 @@
 <?php
 
-use App\Http\Controllers\login;
+use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/login_pelajar', function () {
-    return view('login_pelajar');
-});
-
-Route::get('/login_pengajar', function () {
-    return view('login_pengajar');
-});
 
 Route::get('/regis_pengajar', function () {
     return view('regis_pengajar');
@@ -35,7 +28,26 @@ Route::get('/monitoring_pelajar', function () {
     return view('monitoring_pelajar');
 });
 
-Route::get('/login', [login::class, 'pelajar'])->name('login.pelajar');
-Route::get('/login/pelajar', [login::class, 'pelajar'])->name('login.pelajar');
-Route::get('/login/pengajar', [login::class, 'pengajar'])->name('login.pengajar');
+// Route untuk Student
+Route::get('/instructor/login', [LoginController::class, 'showInstructorLoginForm'])->name('instructor.login');
+Route::get('/student/login', [LoginController::class, 'showStudentLoginForm'])->name('student.login');
+Route::post('/instructor/login', [LoginController::class, 'InstructorLogin']);
+Route::post('/student/login', [LoginController::class, 'StudentLogin']);
+Route::get('/logout', [LoginController::class, 'logout'])->name('logout');
 
+
+
+// Route Logout
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::group(['middleware' => ['auth','role:instructor']], function () {
+    Route::get('/instructor/dashboard', function () {
+        return view('instructor.dashboard');
+    })->name('instructor.dashboard');
+});
+
+Route::group(['middleware' => ['auth','role:student']], function () {
+    Route::get('/student/dashboard', function () {
+        return view('student.dashboard');
+    })->name('student.dashboard');
+});
