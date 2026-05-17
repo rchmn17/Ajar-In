@@ -3,6 +3,7 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
@@ -72,12 +73,21 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::group(['middleware' => ['auth','role:instructor']], function () {
     Route::get('/instructor/dashboard', [DashboardController::class, 'schedule'])->name('instructor.dashboard');
     
+    
 });
+
+
+
+
+// Route untuk menerima POST dari fetch API modal booking
+Route::post('/api/booking/store', [TransactionController::class, 'store'])->name('booking.store');
 
 Route::group(['middleware' => ['auth','role:student']], function () {
     Route::get('/student/dashboard', function () {
         return view('student.dashboard');
     })->name('student.dashboard');
+    Route::get('/student/search', [UserController::class,'pencarianKursus'])->name('student.search');
+    
 });
 
 

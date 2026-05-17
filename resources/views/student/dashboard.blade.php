@@ -26,9 +26,9 @@
                 <button class="px-6 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-bold text-slate-600 hover:bg-slate-50 transition-all">
                     <i class="fas fa-plus mr-2 text-[10px]"></i> Request Matching
                 </button>
-                <button class="px-6 py-2.5 bg-[#1a3652] text-white rounded-xl text-sm font-bold shadow-lg shadow-[#1a3652]/20 hover:bg-[#132a41] transition-all">
+                <a href="{{ route('student.search') }}" class="px-6 py-2.5 bg-[#1a3652] text-white rounded-xl text-sm font-bold shadow-lg shadow-[#1a3652]/20 hover:bg-[#132a41] transition-all">
                     <i class="fas fa-search mr-2 text-[10px]"></i> Cari Tutor
-                </button>
+                </a>
             </div>
         </div>
 
