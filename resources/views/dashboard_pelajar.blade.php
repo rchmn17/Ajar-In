@@ -4,14 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Pelajar - AjarIn</title>
-    <!-- Vite Integration -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <!-- Font Awesome untuk Ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-[#f8fafc] font-sans antialiased text-slate-800">
 
-    <!-- NAVBAR -->
     <nav class="bg-[#1a3652] text-white px-8 py-4 flex items-center justify-between sticky top-0 z-50">
         <div class="flex items-center gap-12">
             <div class="flex items-center gap-2">
@@ -22,7 +19,7 @@
             </div>
             <div class="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
                 <a href="#" class="hover:text-white transition-colors">Cari Tutor</a>
-                <a href="#" class="text-white border-b-2 border-white pb-1">Dashboard</a>
+                <a href="/dashboard-pelajar" class="text-white border-b-2 border-white pb-1">Dashboard</a>
                 <a href="#" class="hover:text-white transition-colors">Monitoring</a>
             </div>
         </div>
@@ -34,16 +31,37 @@
                 <i class="far fa-bell text-xl"></i>
                 <span class="absolute -top-1 -right-1 bg-red-500 text-[10px] w-4 h-4 flex items-center justify-center rounded-full">3</span>
             </div>
-            <div class="flex items-center gap-3 bg-white/10 pl-2 pr-4 py-1.5 rounded-full border border-white/10">
-                <div class="w-8 h-8 rounded-full bg-slate-400 flex items-center justify-center font-bold text-xs uppercase">RP</div>
-                <span class="text-sm font-semibold">Rizky</span>
-                <i class="fas fa-chevron-down text-[10px] text-slate-400"></i>
+            
+            <div class="relative group py-2">
+                <div class="flex items-center gap-3 bg-white/10 pl-2 pr-4 py-1.5 rounded-full border border-white/10 cursor-pointer">
+                    <div class="w-8 h-8 rounded-full bg-slate-400 flex items-center justify-center font-bold text-xs uppercase">RP</div>
+                    <span class="text-sm font-semibold">Rizky</span>
+                    <i class="fas fa-chevron-down text-[10px] text-slate-400"></i>
+                </div>
+                
+                <div class="absolute right-0 top-full mt-1 w-52 bg-white rounded-2xl shadow-xl border border-slate-100 py-2 text-slate-700 hidden group-hover:block transition-all animate-in fade-in slide-in-from-top-2 duration-200 z-50">
+                    <div class="px-4 py-2.5 border-b border-slate-50">
+                        <p class="text-xs font-black text-[#1a3652] leading-tight">Rizky Pratama</p>
+                        <p class="text-[10px] text-slate-400 font-medium">learner@ajarin.id</p>
+                    </div>
+                    <a href="/dashboard-pelajar" class="flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-[#1a3652] transition-colors">
+                        <i class="fas fa-th-large w-4 text-slate-400"></i> Dashboard
+                    </a>
+                    <a href="/profile-pelajar" class="flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50 hover:text-[#1a3652] transition-colors">
+                        <i class="far fa-user w-4 text-slate-400"></i> Profil Saya
+                    </a>
+                    <div class="border-t border-slate-50 mt-1 pt-1">
+                        <a href="#" class="flex items-center gap-3 px-4 py-2.5 text-xs font-bold text-red-500 hover:bg-red-50/50 transition-colors">
+                            <i class="fas fa-sign-out-alt w-4"></i> Keluar
+                        </a>
+                    </div>
+                </div>
             </div>
+            
         </div>
     </nav>
 
     <main class="max-w-7xl mx-auto px-8 py-10">
-        <!-- HEADER -->
         <div class="flex flex-col md:flex-row md:items-center justify-between mb-10 gap-4">
             <div>
                 <p class="text-slate-500 text-sm font-medium mb-1">Dashboard Pelajar</p>
@@ -59,7 +77,6 @@
             </div>
         </div>
 
-        <!-- STATS CARDS -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
             @php
                 $stats = [
@@ -84,9 +101,7 @@
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <!-- LEFT COLUMN -->
             <div class="lg:col-span-8 space-y-8">
-                <!-- FEATURED SESSION -->
                 <div class="bg-[#1a3652] rounded-[2.5rem] p-8 text-white relative overflow-hidden group">
                     <div class="absolute top-[-20%] right-[-10%] w-64 h-64 bg-white/5 rounded-full blur-3xl group-hover:bg-white/10 transition-all"></div>
                     <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -112,7 +127,6 @@
                     </div>
                 </div>
 
-                <!-- JADWAL SESI -->
                 <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-8">
                     <div class="flex items-center justify-between mb-8">
                         <h3 class="text-xl font-bold text-[#1a3652]">Jadwal Sesi</h3>
@@ -123,9 +137,9 @@
                     <div class="space-y-4">
                         @php
                             $sessions = [
-                                ['title' => 'Laravel Middleware & Authentication', 'tutor' => 'Andi Firmansyah', 'time' => '16 Apr • 14:00', 'status' => 'Akan Datang', 'color' => 'blue'],
-                                ['title' => 'Python Pandas untuk Data Analysis', 'tutor' => 'Sari Dewi Putri', 'time' => '14 Apr • 10:00', 'status' => 'Selesai', 'color' => 'slate'],
-                                ['title' => 'IELTS Writing Task 2', 'tutor' => 'Alicia Tanoto', 'time' => '18 Apr • 16:00', 'status' => 'Menunggu', 'color' => 'orange'],
+                                ['title' => 'Laravel Middleware & Authentication', 'tutor' => 'Andi Firmansyah', 'time' => '16 Apr • 14:00', 'status' => 'Akan Datang'],
+                                ['title' => 'Python Pandas untuk Data Analysis', 'tutor' => 'Sari Dewi Putri', 'time' => '14 Apr • 10:00', 'status' => 'Selesai'],
+                                ['title' => 'IELTS Writing Task 2', 'tutor' => 'Alicia Tanoto', 'time' => '18 Apr • 16:00', 'status' => 'Menunggu'],
                             ];
                         @endphp
                         @foreach($sessions as $s)
@@ -146,11 +160,6 @@
                                     {{ $s['status'] == 'Menunggu' ? 'bg-orange-50 text-orange-600' : '' }}">
                                     <i class="fas fa-circle text-[6px] mr-1 mb-0.5"></i> {{ $s['status'] }}
                                 </span>
-                                @if($s['status'] == 'Selesai')
-                                    <button class="text-[10px] font-bold text-slate-400 hover:text-[#1a3652]">Coba Assessment</button>
-                                @elseif($s['status'] == 'Akan Datang')
-                                    <button class="text-[10px] font-bold text-[#1a3652]"><i class="fas fa-link mr-1"></i> Join</button>
-                                @endif
                             </div>
                         </div>
                         @endforeach
@@ -158,9 +167,7 @@
                 </div>
             </div>
 
-            <!-- RIGHT COLUMN -->
             <div class="lg:col-span-4 space-y-6">
-                <!-- HASIL ASSESSMENT -->
                 <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-8">
                     <h3 class="text-lg font-bold text-[#1a3652] mb-6 flex items-center gap-2">
                         <i class="fas fa-chart-bar text-slate-300"></i> Hasil Assessment
@@ -174,90 +181,14 @@
                             <p class="text-[10px] text-slate-400 leading-relaxed mb-1">Pemahaman konsep DataFrame sangat baik. Perlu latihan lebih pada operasi merge dan groupby kompleks.</p>
                             <p class="text-[9px] font-bold text-slate-300 uppercase">14/4/2026</p>
                         </div>
-                        <div class="relative pl-4 border-l-2 border-yellow-500">
-                            <div class="flex justify-between items-start mb-2">
-                                <h4 class="text-xs font-bold leading-relaxed pr-8">Kalkulus Diferensial</h4>
-                                <span class="bg-yellow-500 text-white text-[10px] font-bold px-2 py-1 rounded-lg">76</span>
-                            </div>
-                            <p class="text-[10px] text-slate-400 leading-relaxed mb-1">Konsep limit sudah paham, namun perlu memperkuat pemahaman chain rule pada fungsi komposit.</p>
-                            <p class="text-[9px] font-bold text-slate-300 uppercase">8/4/2026</p>
-                        </div>
-                    </div>
-                    <button class="w-full mt-8 py-3 bg-white border border-dashed border-slate-200 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-400 hover:border-slate-400 hover:text-slate-600 transition-all">
-                        + Mulai Assessment Baru
-                    </button>
-                </div>
-
-                <!-- PROGRES SKILL -->
-                <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm p-8">
-                    <h3 class="text-lg font-bold text-[#1a3652] mb-6">Progres Skill</h3>
-                    <div class="space-y-6">
-                        @foreach([['n' => 'Laravel', 'p' => '75%'], ['n' => 'Python Pandas', 'p' => '60%'], ['n' => 'IELTS Writing', 'p' => '45%']] as $skill)
-                        <div class="space-y-2">
-                            <div class="flex justify-between text-[11px] font-bold">
-                                <span class="text-slate-600">{{ $skill['n'] }}</span>
-                                <span class="text-slate-400">{{ $skill['p'] }}</span>
-                            </div>
-                            <div class="w-full bg-slate-100 h-2 rounded-full overflow-hidden">
-                                <div class="bg-[#1a3652] h-full rounded-full" style="width: {{ $skill['p'] }}"></div>
-                            </div>
-                        </div>
-                        @endforeach
-                    </div>
-                </div>
-
-                <!-- AKSI CEPAT -->
-                <div class="bg-slate-50 rounded-[2.5rem] p-8 border border-slate-100/50">
-                    <h3 class="text-sm font-black uppercase tracking-widest text-slate-400 mb-6">Aksi Cepat</h3>
-                    <div class="space-y-3">
-                        <button class="w-full py-3.5 bg-[#1a3652] text-white rounded-xl text-xs font-bold shadow-lg shadow-[#1a3652]/10 hover:-translate-y-0.5 transition-all">Request Matching</button>
-                        <button class="w-full py-3.5 bg-white border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-white transition-all">Cari Tutor Baru</button>
-                        <button class="w-full py-3.5 text-slate-400 text-xs font-bold hover:text-[#1a3652] transition-colors">Lihat Monitoring Board</button>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <!-- FOOTER -->
     <footer class="bg-[#1a3652] text-white mt-20 pt-20 pb-10 px-8">
-        <div class="max-w-7xl mx-auto">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
-                <div class="space-y-6">
-                    <div class="flex items-center gap-2">
-                        <div class="bg-white/20 p-2 rounded-lg">
-                            <i class="fas fa-book-open text-xl text-white"></i>
-                        </div>
-                        <span class="text-2xl font-bold tracking-tight text-white">AjarIn</span>
-                    </div>
-                    <p class="text-slate-400 text-sm leading-relaxed">Platform micro-learning yang menghubungkan pelajar dengan pengajar ahli secara spesifik.</p>
-                    <div class="flex items-center gap-4 text-slate-400 text-lg">
-                        <a href="#" class="hover:text-white"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="hover:text-white"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="hover:text-white"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#" class="hover:text-white"><i class="fab fa-facebook-f"></i></a>
-                    </div>
-                </div>
-                @foreach(['Platform' => ['Cari Tutor', 'Dashboard Pelajar', 'Dashboard Tutor', 'Monitoring Board'], 'Kategori' => ['Teknologi', 'Akademis', 'Professional', 'Bahasa'], 'Perusahaan' => ['Tentang Kami', 'Karir', 'Blog', 'Kontak']] as $title => $links)
-                <div>
-                    <h5 class="font-bold mb-6 text-sm tracking-wide">{{ $title }}</h5>
-                    <ul class="space-y-4 text-slate-400 text-sm">
-                        @foreach($links as $link)
-                            <li><a href="#" class="hover:text-white transition-colors">{{ $link }}</a></li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endforeach
-            </div>
-            <div class="flex flex-col md:flex-row items-center justify-between pt-10 border-t border-white/10 text-[10px] font-bold uppercase tracking-widest text-slate-500">
-                <p>© 2026 AjarIn. Semua hak dilindungi.</p>
-                <div class="flex items-center gap-8 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-white">Syarat & Ketentuan</a>
-                    <a href="#" class="hover:text-white">Privasi</a>
-                    <a href="#" class="hover:text-white">Cookie</a>
-                </div>
-            </div>
-        </div>
+        <p class="text-center text-xs text-slate-500">© 2026 AjarIn. Semua hak dilindungi.</p>
     </footer>
 </body>
 </html>
