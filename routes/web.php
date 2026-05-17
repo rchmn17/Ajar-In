@@ -91,7 +91,7 @@ Route::group(['middleware' => ['auth','role:student']], function () {
         return view('student.dashboard');
     })->name('student.dashboard');
     Route::get('/student/search', [UserController::class,'pencarianKursus'])->name('student.search');
-    
+    Route::get('/student/loggedin', [TransactionController::class,'initial_user'])->name('student.loggedin');
 });
 
 

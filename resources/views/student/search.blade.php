@@ -19,8 +19,19 @@
         <x-navbar></x-navbar>
 
         <section class="bg-[#1a3652] pt-12 pb-16 px-8">
-            <div class="max-w-7xl mx-auto">
+            <div class="max-w-6xl mx-auto">
                 <h1 class="text-4xl font-bold text-white mb-8">Temukan Pengajar Terbaikmu</h1>
+                <form action="" method="POST" class="flex items-center gap-4 mb-8">
+                    <div class="relative flex-1">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" placeholder="Cari skill spesifik... (cth: Laravel Middleware)" 
+                            class="w-full pl-12 pr-4 py-4 rounded-xl bg-white border-none focus:ring-4 focus:ring-white/20 outline-none text-sm shadow-xl">
+                    </div>
+                    <button type="submit" class="bg-[#e2d1b9] text-[#1a3652] px-6 py-4 rounded-xl font-bold text-sm shadow-lg hover:bg-[#d4c1a8] transition-all whitespace-nowrap">
+                        Request Match
+                    </button>
+                </form>
+                
             </div>
         </section>
 
@@ -189,6 +200,8 @@
             </div> 
         </div> 
     </div> 
+
+    <x-footer></x-footer>
 
     <script>
         // 1. Deklarasi semua variabel DOM agar tidak error (Sangat Penting!)
