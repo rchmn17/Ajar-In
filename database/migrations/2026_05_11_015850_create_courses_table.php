@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('courses', function (Blueprint $table) {
             $table->id('course_id');
-            $table->unsignedBigInteger('instructor_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->text('description')->nullable();
             $table->decimal('price', 10, 2)->nullable();
@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Foreign Key constraint
-            $table->foreign('instructor_id')->references('instructor_id')->on('instructors')->onDelete('cascade');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
         });
     }
 

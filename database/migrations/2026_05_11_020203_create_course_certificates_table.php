@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('course_certificates', function (Blueprint $table) {
             $table->id('course_certificate_id');
-            $table->unsignedBigInteger('student_id');
+            $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('course_id');
             $table->dateTime('date_time');
             $table->timestamps();
 
             // Foreign Key constraints
-            $table->foreign('student_id')->references('student_id')->on('students')->onDelete('cascade');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade');
             $table->foreign('course_id')->references('course_id')->on('courses')->onDelete('cascade');
         });
     }
